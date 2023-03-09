@@ -1,0 +1,94 @@
+.bottom-bar {
+    width: 1fr;
+    border-top-width: 1px;
+    border-color: dimgray;
+    background-color: #464646;
+    justify-content: space-between;
+}
+
+.layer-container {
+    width: 1fr;
+    height: 1fr;
+    padding-horiz: 5px;
+}
+
+.layer-box {
+    width: 1fr;
+    height: 36px;
+
+    background-color: #464646;
+    border-width: 1px;
+    border-color: dimgray;
+    align-items: center;
+    flex-direction: row;
+
+    margin-top: 2px;
+
+    overflow: hidden;
+}
+
+.layer-box:hover {
+    background-color: #5c6467;
+}
+
+.layer-box:active {
+    background-color: #6f828a;
+}
+
+.layer-toggle-box {
+    width: 30px;
+    height: 1fr;
+    background-color: slategray;
+    padding: 2px;
+}
+
+.layer-eye-open, .layer-eye-close {
+    dimen: 1fr;
+    aspect-ratio: 1;
+}
+
+.layer-eye-open {
+    texture: 'eye-open';
+}
+
+.layer-eye-close {
+    texture: 'eye-close';
+}
+
+.layer-image {
+    height: 90%;
+    aspect-ratio: 16 / 9;
+    margin-horiz: 5px;
+}
+
+.layer-text {
+    font-size: 16px;
+    color: ghostwhite;
+}
+
+.layer-buttons-container {
+    border-top-width: 1px;
+    border-color: gray;
+    width: 1fr;
+    height: 40px;
+    padding: 5px;
+    align-items: center;
+}
+
+.layer-button {
+    dimen: 30px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    background-color: #00C0E0;
+
+    margin-left: 5px;
+}
+
+.layer-button:hover {
+    background-color: #7ecee5;
+}
+
+.layer-button:active {
+    background-color: #9adbef;
+}

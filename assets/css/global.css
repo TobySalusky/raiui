@@ -1,0 +1,11 @@
+.fill {
+    dimen: 1fr;
+}
+
+.d-50 {
+    dimen: 50%;
+}
+
+.center {
+    align: center;
+}

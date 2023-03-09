@@ -1,0 +1,45 @@
+.file-picker-container {
+    dimen: 1fr;
+    overflow: hidden;
+}
+
+.file-picker-header {
+    font-size: 26px;
+    padding: 5px;
+    color: ghostwhite;
+}
+
+.directory-container {
+    width: 1fr;
+    padding-horiz: 5px;
+}
+
+.directory-line {
+    flex-direction: row;
+    width: 1fr;
+    border-radius: 3px;
+}
+
+.directory-line-highlight {
+    flex-direction: row;
+    background-color: #6c6c6c;
+    width: 1fr;
+}
+
+.directory-line-active {
+    flex-direction: row;
+    background-color: #6495ED;
+    width: 1fr;
+}
+
+.file-picker-text {
+    font-size: 16px;
+    color: ghostwhite;
+}
+
+.file-picker-folder-icon {
+    background-color: red;
+    height: 1fr;
+    aspect-ratio: 1;
+    texture: "folder_icon";
+}
