@@ -2,8 +2,7 @@
 // Created by Tobiathan on 2/16/23.
 //
 
-#ifndef ARTNET_SCROLLVIEWY_H
-#define ARTNET_SCROLLVIEWY_H
+#pragma once
 
 #include "Includes.h"
 #include "Identification.h"
@@ -113,6 +112,3 @@ namespace tui {
         static constexpr float SCROLL_VIEW_SCROLL_SPEED = 5.0f;
     };
 }
-
-
-#endif //ARTNET_SCROLLVIEWY_H

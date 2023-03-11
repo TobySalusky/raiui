@@ -2,8 +2,7 @@
 // Created by Tobiathan on 1/14/23.
 //
 
-#ifndef ARTNET_STATE_H
-#define ARTNET_STATE_H
+#pragma once
 
 #include <any>
 #include "Includes.h"
@@ -73,6 +72,3 @@ namespace tui {
         return *std::any_cast<decltype(defaultFunc())>(&AppState::Globals()[id]);
     }
 }
-
-
-#endif //ARTNET_STATE_H

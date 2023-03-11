@@ -2,8 +2,7 @@
 // Created by Tobiathan on 2/27/23.
 //
 
-#ifndef ARTNET_INTERACTIVE_H
-#define ARTNET_INTERACTIVE_H
+#pragma once
 
 #include "Includes.h"
 #include "UIComponent.h"
@@ -90,5 +89,3 @@ namespace tui {
         constexpr static float DOUBLE_PRESS_THRESHOLD = 0.5f;
     };
 }
-
-#endif //ARTNET_INTERACTIVE_H

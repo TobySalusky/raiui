@@ -2,8 +2,7 @@
 // Created by Tobiathan on 3/6/23.
 //
 
-#ifndef ARTNET_FILEPICKERDIRECTORY_H
-#define ARTNET_FILEPICKERDIRECTORY_H
+#pragma once
 
 #include "Includes.h"
 #include "UIComponent.h"
@@ -19,6 +18,3 @@ namespace tui {
         static CStyle IndentClass(const string& classes, int indents);
     };
 }
-
-
-#endif //ARTNET_FILEPICKERDIRECTORY_H

@@ -2,8 +2,7 @@
 // Created by Tobiathan on 3/6/23.
 //
 
-#ifndef ARTNET_APPSTATE_H
-#define ARTNET_APPSTATE_H
+#pragma once
 
 #include "Includes.h"
 #include <any>
@@ -18,7 +17,3 @@ namespace tui {
         static inline unordered_map<string, std::any> globals = {};
     };
 }
-
-
-
-#endif //ARTNET_APPSTATE_H

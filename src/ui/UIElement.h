@@ -1,5 +1,4 @@
-#ifndef ARTNET_LOGGER_H
-#define ARTNET_LOGGER_H
+#pragma once
 
 #include <list>
 #include "Includes.h"
@@ -150,4 +149,3 @@ namespace tui {
         DEFINE_DIRECTIONAL_SIZE_STYLE_GET(BorderWidthLastStyle, style.borderRightWidth, style.borderBottomWidth);
     };
 }
-#endif //ARTNET_LOGGER_H

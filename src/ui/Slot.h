@@ -2,9 +2,7 @@
 // Created by Tobiathan on 1/15/23.
 //
 
-#ifndef ARTNET_SLOT_H
-#define ARTNET_SLOT_H
-
+#pragma once
 
 #include "UIElement.h"
 
@@ -19,6 +17,3 @@ namespace tui {
         UIElement* hereTop = nullptr;
     };
 }
-
-
-#endif //ARTNET_SLOT_H

@@ -2,8 +2,7 @@
 // Created by Tobiathan on 1/10/23.
 //
 
-#ifndef ARTNET_FLEX_H
-#define ARTNET_FLEX_H
+#pragma once
 
 #include "DOM.h"
 #include "Text.h"
@@ -50,4 +49,3 @@ namespace tui {
     };
 
 }
-#endif //ARTNET_FLEX_H

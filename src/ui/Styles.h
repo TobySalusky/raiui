@@ -2,9 +2,7 @@
 // Created by Tobiathan on 1/3/23.
 //
 
-#ifndef ARTNET_STYLES_H
-#define ARTNET_STYLES_H
-
+#pragma once
 
 #include "Includes.h"
 #include <filesystem>
@@ -30,6 +28,3 @@ private:
     unordered_map<string, Style> styleMap = {};
     static inline unique_ptr<Styles> instance = {};
 };
-
-
-#endif //ARTNET_STYLES_H

@@ -2,8 +2,7 @@
 // Created by Tobiathan on 3/6/23.
 //
 
-#ifndef ARTNET_FILEPICKERDIRECTORYNODE_H
-#define ARTNET_FILEPICKERDIRECTORYNODE_H
+#pragma once
 
 #include "Includes.h"
 #include <filesystem>
@@ -26,6 +25,3 @@ namespace tui {
         void Close();
     };
 }
-
-
-#endif //ARTNET_FILEPICKERDIRECTORYNODE_H

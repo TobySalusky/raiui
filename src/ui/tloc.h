@@ -2,9 +2,7 @@
 // Created by Tobiathan on 3/11/23.
 //
 
-#ifndef ARTNET_TLOC_H
-#define ARTNET_TLOC_H
-
+#pragma once
 
 class tloc {
 public:
@@ -22,6 +20,3 @@ private:
     const char* _file;
     unsigned int _line;
 };
-
-
-#endif //ARTNET_TLOC_H

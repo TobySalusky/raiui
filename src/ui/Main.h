@@ -2,8 +2,7 @@
 // Created by Tobiathan on 12/26/22.
 //
 
-#ifndef ARTNET_MAIN_H
-#define ARTNET_MAIN_H
+#pragma once
 
 #include "Includes.h"
 
@@ -38,5 +37,3 @@ namespace tui {
         texture_load_callback_t textureLoadCallback;
     };
 }
-
-#endif //ARTNET_MAIN_H

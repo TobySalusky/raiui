@@ -2,8 +2,7 @@
 // Created by Tobiathan on 1/3/23.
 //
 
-#ifndef ARTNET_STYLE_H
-#define ARTNET_STYLE_H
+#pragma once
 
 #include "Includes.h"
 #include "Units.h"
@@ -412,5 +411,3 @@ struct style_t {
 
     optional<ZIndexVariant> zIndex = std::nullopt;
 };
-
-#endif //ARTNET_STYLE_H

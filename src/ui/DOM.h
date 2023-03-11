@@ -2,8 +2,7 @@
 // Created by Tobiathan on 12/26/22.
 //
 
-#ifndef ARTNET_DOM_H
-#define ARTNET_DOM_H
+#pragma once
 
 #include <utility>
 #include <stack>
@@ -68,5 +67,3 @@ namespace tui {
         bool dom1IsCurrent = true;
     };
 }
-
-#endif //ARTNET_DOM_H

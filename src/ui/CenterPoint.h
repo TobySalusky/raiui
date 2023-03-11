@@ -2,8 +2,7 @@
 // Created by Tobiathan on 1/16/23.
 //
 
-#ifndef ARTNET_CENTERPOINT_H
-#define ARTNET_CENTERPOINT_H
+#pragma once
 
 #include "DOM.h"
 #include "Style.h"
@@ -22,5 +21,3 @@ namespace tui {
         }
     };
 }
-
-#endif //ARTNET_CENTERPOINT_H

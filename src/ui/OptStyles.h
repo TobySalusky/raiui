@@ -2,8 +2,7 @@
 // Created by Tobiathan on 3/7/23.
 //
 
-#ifndef ARTNET_OPTSTYLES_H
-#define ARTNET_OPTSTYLES_H
+#pragma once
 
 #include "Includes.h"
 #include "Style.h"
@@ -28,6 +27,3 @@ public:
 private:
     style_t generatedStyle;
 };
-
-
-#endif //ARTNET_OPTSTYLES_H

@@ -2,8 +2,7 @@
 // Created by Tobiathan on 1/15/23.
 //
 
-#ifndef ARTNET_UNITS_H
-#define ARTNET_UNITS_H
+#pragma once
 
 namespace tui {
     struct percent {
@@ -31,5 +30,3 @@ namespace tui {
         return fraction { static_cast<float>(value) };
     }
 }
-
-#endif //ARTNET_UNITS_H

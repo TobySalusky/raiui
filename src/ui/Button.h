@@ -2,8 +2,7 @@
 // Created by Tobiathan on 12/26/22.
 //
 
-#ifndef ARTNET_BUTTON_H
-#define ARTNET_BUTTON_H
+#pragma once
 
 #include "DOM.h"
 #include "Text.h"
@@ -134,5 +133,3 @@ namespace tui {
         return button.Hovered();
     }
 }
-
-#endif //ARTNET_BUTTON_H

@@ -2,8 +2,7 @@
 // Created by Tobiathan on 1/10/23.
 //
 
-#ifndef ARTNET_DIV_H
-#define ARTNET_DIV_H
+#pragma once
 
 #include "Includes.h"
 #include "DOM.h"
@@ -25,6 +24,3 @@ namespace tui {
         }
     };
 }
-
-
-#endif //ARTNET_DIV_H

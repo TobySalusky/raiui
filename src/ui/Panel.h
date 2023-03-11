@@ -2,8 +2,7 @@
 // Created by Tobiathan on 1/14/23.
 //
 
-#ifndef ARTNET_PANEL_H
-#define ARTNET_PANEL_H
+#pragma once
 
 #include "State.h"
 #include "Identification.h"
@@ -71,5 +70,3 @@ namespace tui {
         }
     };
 }
-
-#endif //ARTNET_PANEL_H

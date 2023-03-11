@@ -2,8 +2,7 @@
 // Created by Tobiathan on 2/1/23.
 //
 
-#ifndef ARTNET_UICOMPONENT_H
-#define ARTNET_UICOMPONENT_H
+#pragma once
 
 #include "Includes.h"
 
@@ -35,5 +34,3 @@ namespace tui {
         { val.UsePrev() } -> std::convertible_to<optional<UIElement*>>;
     };
 }
-
-#endif //ARTNET_UICOMPONENT_H

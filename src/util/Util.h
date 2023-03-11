@@ -2,9 +2,7 @@
 // Created by Tobiathan on 1/17/23.
 //
 
-#ifndef ARTNET_UTIL_H
-#define ARTNET_UTIL_H
-
+#pragma once
 
 #include <numeric>
 #include <functional>
@@ -240,6 +238,3 @@ namespace tutil {
         return dole_impl(t, std::make_index_sequence<Count>());
     }
 }
-
-
-#endif //ARTNET_UTIL_H

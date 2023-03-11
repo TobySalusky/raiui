@@ -32,11 +32,11 @@
 }
 
 .layer-box-stub:hover {
-    background-color: #5c6467;
+    background-color: #646464;
 }
 
 .layer-box-stub:active {
-    background-color: #6f828a;
+    background-color: #6495ED;
 }
 
 .layer-toggle-box {

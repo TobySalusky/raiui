@@ -2,8 +2,8 @@
 // Created by Tobiathan on 1/22/23.
 //
 
-#ifndef ARTNET_COLORCONVERTER_H
-#define ARTNET_COLORCONVERTER_H
+#pragma once
+
 
 #include "Includes.h"
 #include "Style.h"
@@ -17,5 +17,3 @@ private:
     static RayColor NamedColorToColor(const string& namedColor);
     static unordered_map<string, RayColor> namedColorLookup;
 };
-
-#endif //ARTNET_COLORCONVERTER_H

@@ -2,8 +2,7 @@
 // Created by Tobiathan on 1/10/23.
 //
 
-#ifndef ARTNET_SPAN_H
-#define ARTNET_SPAN_H
+#pragma once
 
 #include "DOM.h"
 #include "Style.h"
@@ -25,5 +24,3 @@ namespace tui {
         }
     };
 }
-
-#endif //ARTNET_SPAN_H

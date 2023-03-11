@@ -2,8 +2,7 @@
 // Created by Tobiathan on 1/31/23.
 //
 
-#ifndef ARTNET_TOOLTIP_H
-#define ARTNET_TOOLTIP_H
+#pragma once
 
 #include "Includes.h"
 #include "Style.h"
@@ -50,4 +49,3 @@ namespace tui {
         return DelayTooltipForId(target.id, delay, idLike, location);
     }
 }
-#endif //ARTNET_TOOLTIP_H

@@ -2,8 +2,7 @@
 // Created by Tobiathan on 12/27/22.
 //
 
-#ifndef ARTNET_TEXT_H
-#define ARTNET_TEXT_H
+#pragma once
 
 #include "Includes.h"
 #include "DOM.h"
@@ -26,5 +25,3 @@ namespace tui { // TODO: add std::fmt-like
 
     void Text(const italic& strongText, const style_t& style = {});
 }
-
-#endif //ARTNET_TEXT_H

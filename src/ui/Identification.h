@@ -2,8 +2,7 @@
 // Created by Tobiathan on 1/4/23.
 //
 
-#ifndef ARTNET_IDENTIFICATION_H
-#define ARTNET_IDENTIFICATION_H
+#pragma once
 
 #include "Includes.h"
 #include "Main.h"
@@ -35,5 +34,3 @@ namespace tui {
 
     string with_scope_id(const string& id);
 }
-
-#endif //ARTNET_IDENTIFICATION_H
