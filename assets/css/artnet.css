@@ -16,22 +16,26 @@
     width: 1fr;
     height: 36px;
 
-    background-color: #464646;
     border-width: 1px;
-    border-color: dimgray;
-    align-items: center;
-    flex-direction: row;
+    border-color: black;
 
     margin-top: 2px;
+}
+
+.layer-box-stub {
+    dimen: 1fr;
+    background-color: #464646;
+    align-items: center;
+    flex-direction: row;
 
     overflow: hidden;
 }
 
-.layer-box:hover {
+.layer-box-stub:hover {
     background-color: #5c6467;
 }
 
-.layer-box:active {
+.layer-box-stub:active {
     background-color: #6f828a;
 }
 
@@ -40,6 +44,18 @@
     height: 1fr;
     background-color: slategray;
     padding: 2px;
+    align: center;
+
+    border-right-width: 1px;
+    border-color: black;
+}
+
+.layer-toggle-box:hover {
+    background-color: #8a9cad;
+}
+
+.layer-toggle-box:active {
+    background-color: #9baec0;
 }
 
 .layer-eye-open, .layer-eye-close {

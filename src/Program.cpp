@@ -21,6 +21,7 @@
 #include "ui/Tooltip.h"
 #include "ui/FilePicker.h"
 #include "ui/OptStyles.h"
+#include "ui/ImageLeaf.h"
 
 using namespace tui;
 using namespace tutil;
@@ -119,10 +120,10 @@ void Program::LayerUI() {
 
         for (Layer& layer : layers) {
             ScopeId layerId (layer.name);
-            Interactive layerBox(InteractiveClass{"layer-box"});
+            Span layerBox("layer-box");
             {
-                {
-                    Button toggle(content{}, "layer-toggle-box center");
+                { // toggle
+                    Interactive toggle(InteractiveClass { "layer-toggle-box" });
                     Div eye(layer.visible ? "layer-eye-open" : "layer-eye-close");
 
                     if (auto tp = DelayTooltip(toggle)) {
@@ -131,10 +132,11 @@ void Program::LayerUI() {
 
                     if (toggle.Pressed()) { layer.visible ^= true; }
                 }
-                {
-                    Div img(ClassAndStyle{ "layer-image", { .texture = layer.textureName }});
+                { // stub
+                    Interactive layerBoxStub(InteractiveClass {"layer-box-stub"});
+                    ImageLeaf(layer.textureName, "layer-image");
+                    Text(layer.name, "layer-text");
                 }
-                Text(layer.name, "layer-text");
             }
         }
     }
