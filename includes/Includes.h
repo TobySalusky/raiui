@@ -16,10 +16,10 @@
 #include <unordered_set>
 #include <variant>
 #include <numeric>
-#include <source_location>
 
 #include "../src/util/Logger.h"
 #include "../src/util/Util.h"
+#include "../src/ui/tloc.h"
 
 // GLOBAL typedefs/aliases -- shorten lengthy type names for more ergonomic coding :)
 
@@ -64,8 +64,6 @@ using variant = std::variant<Args...>;
 
 template <typename... Args>
 using tuple = std::tuple<Args...>;
-
-using tloc = std::source_location;
 
 #define BEG_END(v) v.begin(), v.end()
 

@@ -10,7 +10,7 @@
 
 namespace tui {
     struct FilePicker : public UIComponent {
-        explicit FilePicker(const string& topLevelDirPath, const id_t& idLike = "", std::source_location location = tloc::current());
+        explicit FilePicker(const string& topLevelDirPath, const id_t& idLike = "", tloc location = tloc::current());
     };
 }
 

@@ -9,8 +9,7 @@
 #include "Button.h"
 #include "Span.h"
 
-tui::FilePickerDirectory::FilePickerDirectory(FilePickerDirectoryNode& node, int depth, const tui::id_t& idLike,
-                                              std::source_location location) : UIComponent(idLike, location) {
+tui::FilePickerDirectory::FilePickerDirectory(FilePickerDirectoryNode& node, int depth, const tui::id_t& idLike, tloc location) : UIComponent(idLike, location) {
     ScopeId scopeId(id);
 
     {

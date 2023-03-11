@@ -10,14 +10,12 @@
 #include "Main.h"
 #include "Style.h"
 #include "Identification.h"
-#include <source_location>
-
 
 namespace tui {
     struct FlexVert : UIComponent {
 
         explicit FlexVert(const style_t &style = {}, const id_t& idLike = "",
-                        const std::source_location &location = tloc::current())
+                          tloc location = tloc::current())
                 : UIComponent(idLike, location) {
             id = gen_id(idLike, location);
             DOM::Current().Attach({.id = id, .style=combined_styles(Style {
@@ -25,8 +23,7 @@ namespace tui {
                 }, style)});
         }
 
-        explicit FlexVert(AlignType justifyContent = AlignType::SpaceBetween, AlignType alignItems = AlignType::Center, const id_t& idLike = "",
-                          const std::source_location &location = tloc::current())
+        explicit FlexVert(AlignType justifyContent = AlignType::SpaceBetween, AlignType alignItems = AlignType::Center, const id_t& idLike = "", tloc location = tloc::current())
                           : FlexVert(Style {.justifyContent = justifyContent, .alignItems = alignItems}, idLike, location) {}
 
         ~FlexVert() {
@@ -36,8 +33,7 @@ namespace tui {
 
     struct FlexHoriz : UIComponent {
 
-        explicit FlexHoriz(const style_t &style = {}, const id_t& idLike = "",
-                          const std::source_location &location = tloc::current())
+        explicit FlexHoriz(const style_t &style = {}, const id_t& idLike = "", tloc location = tloc::current())
                 : UIComponent(idLike, location){
             id = gen_id(idLike, location);
             DOM::Current().Attach({.id = id, .style=combined_styles(Style {
@@ -45,8 +41,7 @@ namespace tui {
             }, style)});
         }
 
-        explicit FlexHoriz(AlignType justifyContent = AlignType::SpaceBetween, AlignType alignItems = AlignType::Center, const id_t& idLike = "",
-                          const std::source_location &location = tloc::current())
+        explicit FlexHoriz(AlignType justifyContent = AlignType::SpaceBetween, AlignType alignItems = AlignType::Center, const id_t& idLike = "", tloc location = tloc::current())
                 : FlexHoriz(Style {.justifyContent = justifyContent, .alignItems = alignItems}, idLike, location) {}
 
         ~FlexHoriz() {

@@ -12,7 +12,6 @@
 #include "Identification.h"
 #include "State.h"
 #include "UIComponent.h"
-#include <source_location>
 
 namespace tui {
     template<typename... Ts>

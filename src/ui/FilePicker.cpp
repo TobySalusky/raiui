@@ -8,14 +8,12 @@
 #include "FilePickerDirectoryNode.h"
 #include "Text.h"
 
-tui::FilePicker::FilePicker(const string& topLevelDirPath, const tui::id_t& idLike,
-                            std::source_location location) : UIComponent(idLike, location) {
+tui::FilePicker::FilePicker(const string& topLevelDirPath, const tui::id_t& idLike, tloc location) : UIComponent(idLike, location) {
     FilePickerDirectoryNode& filePickerRoot = UseInitRef([&](){
         return FilePickerDirectoryNode::Create(topLevelDirPath);
     });
 
-    Div scrollView("file-picker-container");
-//    ScrollViewY scrollView("file-picker-container"); // TODO: crashes rn :'(
+    ScrollViewY scrollView("file-picker-container");
     Text(strong{ "Project" }, "file-picker-header");
     FilePickerDirectory topDir(filePickerRoot);
 }

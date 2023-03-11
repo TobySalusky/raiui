@@ -51,9 +51,7 @@ void Program::Run() {
         Render();
     }
 }
-void Program::Update(float deltaTime) {
-
-}
+void Program::Update(float deltaTime) {}
 
 void Program::Render() {
     SCREEN_WIDTH = GetScreenWidth();

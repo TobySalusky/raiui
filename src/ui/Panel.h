@@ -13,7 +13,6 @@
 #include "Button.h"
 #include "Span.h"
 #include "Slot.h"
-#include <source_location>
 #include <algorithm>
 
 namespace tui {
@@ -30,7 +29,7 @@ namespace tui {
     };
 
     struct Panel : UIComponent {
-        explicit Panel (const PanelOptions& options = {}, const style_t &style = {}, id_t&& idLike = "", const std::source_location &location = tloc::current())
+        explicit Panel (const PanelOptions& options = {}, const style_t &style = {}, id_t&& idLike = "", tloc location = tloc::current())
                 : UIComponent(idLike, location) {
             Slot slot;
             ScopeId scopeId (id);
