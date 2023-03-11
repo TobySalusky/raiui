@@ -14,7 +14,7 @@ namespace tui {
         explicit FilePickerDirectory(FilePickerDirectoryNode& node, int depth = 0, const id_t& idLike = "", tloc location = tloc::current());
 
     private:
-        static constexpr int INDENT_PIXELS = 10;
+        static constexpr int INDENT_PIXELS = 18;
 
         static CStyle IndentClass(const string& classes, int indents);
     };

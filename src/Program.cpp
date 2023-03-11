@@ -67,11 +67,8 @@ void Program::Render() {
         {
             FlexHoriz panelContainer("fill");
             {
-                Panel panel({ .minWidth = 50.0f },
-                            Style{ .flexDir = FlexDirection::Row, .align = AlignType::Center, .backgroundColor = panelColor });
-//                Div d(Style{ .dimen = 1_fr, .margin = 3, .backgroundColor = GRAY});
-
-                // TODO: extract path!!
+                Panel panel({ .defaultWidth = 200.0f, .minWidth = 50.0f},
+                            Style{ .backgroundColor = panelColor });
                 FilePicker filePicker("/Users/toby/CLionProjects/TestModule");
             }
 
