@@ -8,6 +8,7 @@
 #include "Interactive.h"
 #include "Button.h"
 #include "Span.h"
+#include "Leaf.h"
 
 tui::FilePickerDirectory::FilePickerDirectory(FilePickerDirectoryNode& node, int depth, const tui::id_t& idLike, tloc location) : UIComponent(idLike, location) {
     ScopeId scopeId(id);
@@ -27,10 +28,7 @@ tui::FilePickerDirectory::FilePickerDirectory(FilePickerDirectoryNode& node, int
         } else {
             Text(" ", CStyle{"file-picker-text", {.paddingHoriz = 5}});
         }
-        Div icon("file-picker-folder-icon");
-        if (icon.UsePrev()) {
-            Log("width: {}", (**icon.UsePrev()).GetClientBounds().width);
-        }
+        Leaf("file-picker-folder-icon");
         Text(node.name, "file-picker-text");
     }
 

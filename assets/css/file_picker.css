@@ -38,8 +38,8 @@
 }
 
 .file-picker-folder-icon {
-    background-color: red;
     height: 1fr;
     aspect-ratio: 1;
     texture: "folder_icon";
+    margin-right: 3px;
 }
