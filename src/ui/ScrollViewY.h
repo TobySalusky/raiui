@@ -24,6 +24,9 @@ namespace tui {
             // state
             float& scrollY = UseRef(0.0f);
 
+            struct ScrollBarGrabInfo { Vec2 grabbedAt; float grabbedScrollBarTop; };
+            auto& scrollGrab = UseRef<optional<ScrollBarGrabInfo>>(std::nullopt);
+
             // container pre-definitions
             auto clipDef = predef();
             auto contentDef = predef();
@@ -33,7 +36,9 @@ namespace tui {
             optional<UIElement*> prevContentContainer = DOM::Previous().Lookup(contentDef.id);
 
             bool scrollBar = false;
+            float maxScroll = 0.0f;
             float scrollBarHeight = 0.0f;
+            float scrollBarTopUnits = 0.0f;
             float scrollBarTop = 0.0f;
             if (prevClipContainer && prevContentContainer) { // TODO: make func
                 float clipHeight = (**prevClipContainer).GetClientBounds().height;
@@ -43,7 +48,7 @@ namespace tui {
                     scrollY = 0.0f;
                 } else {
                     // scrolling necessary...
-                    const float maxScroll = contentHeight - clipHeight;
+                    maxScroll = contentHeight - clipHeight;
                     bool clipHovered = (**prevClipContainer).GetVisibleBounds().CheckCollision(raylib::Mouse::GetPosition()); // TODO: interactive-rect
 
                     if (clipHovered) {
@@ -56,7 +61,8 @@ namespace tui {
                     // enable UI scroll bar
                     scrollBar = true;
                     scrollBarHeight = clipHeight * (clipHeight / contentHeight);
-                    scrollBarTop = (clipHeight - scrollBarHeight) * (scrollY / maxScroll);
+                    scrollBarTopUnits = (clipHeight - scrollBarHeight) / maxScroll;
+                    scrollBarTop = scrollY * scrollBarTopUnits;
                 }
             }
 
@@ -72,6 +78,28 @@ namespace tui {
                 Div scrollBarContainer(Style { .width = 10, .height = 1_fr, .alignItems = AlignType::Center, .borderWidth = 1, .borderColor = GRAY });
                 // TODO: (the thing)!
                 Interactive scroller(Style { .width = 1_fr, .height = scrollBarHeight, .backgroundColor = RayColor{100, 100, 100, 150}, .position = PositionType::Relative, .top = scrollBarTop });
+
+                if (scroller.Pressed()) {
+                    scrollGrab = { raylib::Mouse::GetPosition(), scrollBarTop };
+                }
+
+                if (scroller.Released()) {
+                    scrollGrab = std::nullopt;
+                }
+
+                if (scrollGrab) { // dragging scroll-bar
+                    const float desiredTopDiff = raylib::Mouse::GetPosition().y - scrollGrab->grabbedAt.y;
+                    const float desiredTop = scrollGrab->grabbedScrollBarTop + desiredTopDiff;
+                    const float necessaryAndSufficientScrollY = desiredTop / scrollBarTopUnits;
+
+                    scrollY = necessaryAndSufficientScrollY;
+
+                    // constrain scroll to possible range
+                    scrollY = std::clamp(scrollY, 0.0f, maxScroll);
+                    // TODO: DRY please this is terrible!
+                }
+            } else {
+                scrollGrab = std::nullopt;
             }
         }
 
