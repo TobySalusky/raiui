@@ -21,6 +21,8 @@ namespace tui {
             Slot slot;
             ScopeId scopeId (id);
 
+            // TODO: rewrite all into state struct
+            // TODO: add clicking off scroller on scroll-bar to teleport it along height
             // state
             float& scrollY = UseRef(0.0f);
 

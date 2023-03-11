@@ -52,7 +52,7 @@ namespace tui {
                 Button dragBar (content{}, Style { .width = 15, .height = 100_pct });
                 auto prev = DOM::Previous().Lookup(container.id);
                 if (dragBar.Down() && prev) {
-                    const RectF prevRect = (**prev).GetVisibleBounds();
+                    const RectF prevRect = (**prev).GetBorderedBounds();
                     const float mouseX = (float) raylib::Mouse::GetX();
                     const float targetWidth = (dir == PanelDirection::Right)
                             ? mouseX - prevRect.x

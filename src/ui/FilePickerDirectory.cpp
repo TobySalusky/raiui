@@ -13,30 +13,31 @@ tui::FilePickerDirectory::FilePickerDirectory(FilePickerDirectoryNode& node, int
     ScopeId scopeId(id);
 
     {
-        // TODO: NOTE: no early returns in function components!!!! gets very messy!!
-        Div container ("directory-container"); // placing this in the outer scope is UB?? TODO: figure out why!! (because return on open???? -- variable stack size???)
+        Div container ("directory-container");
         Interactive dirLine (
                 IndentClass("directory-line", depth),
                 InteractiveStyles { "directory-line-highlight", "directory-line-active" }
         );
         if (!node.children.empty()) {
             Button caretButton;
-            Text(node.open ? "v" : "^", CStyle{"file-picker-text", {.paddingHoriz = 5}});
+            Text(node.open ? "v" : ">", CStyle{"file-picker-text", {.paddingHoriz = 5}});
             if (caretButton.Pressed() || dirLine.DoublePressed()) {
                 node.Toggle();
             }
         } else {
             Text(" ", CStyle{"file-picker-text", {.paddingHoriz = 5}});
         }
-//        Div icon("file-picker-folder-icon");
-
+        Div icon("file-picker-folder-icon");
+        if (icon.UsePrev()) {
+            Log("width: {}", (**icon.UsePrev()).GetClientBounds().width);
+        }
         Text(node.name, "file-picker-text");
     }
 
-    if (node.open) { // DO NOT MAKE EARLY RETURN!
-        for (auto& child : node.children) {
-            FilePickerDirectory subDir(child, depth + 1, id_append { child.path });
-        }
+    if (!node.open) { return; }
+
+    for (auto& child : node.children) {
+        FilePickerDirectory subDir(child, depth + 1, id_append { child.path });
     }
 }
 

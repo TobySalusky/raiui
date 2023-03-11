@@ -24,6 +24,7 @@ namespace tui {
         [[nodiscard]] RectF GetClientBounds();
         [[nodiscard]] RectF GetContentBounds() const;
         [[nodiscard]] RectF GetUnBorderedBounds() const;
+        [[nodiscard]] RectF GetBorderedBounds() const;
         [[nodiscard]] RectF GetVisibleBounds() const;
 
         void ClippingPreorderTraversal(std::vector<UIElement*>& preorderTraversal, int parentZIndex = 0, optional<RectF> parentClippingRect = std::nullopt);

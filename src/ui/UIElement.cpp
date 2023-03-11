@@ -359,7 +359,7 @@ RectF tui::UIElement::GetUnBorderedBounds() const {
     };
 }
 
-RectF tui::UIElement::GetVisibleBounds() const {
+RectF tui::UIElement::GetBorderedBounds() const {
     return {
         x + marginLeft,
         y + marginTop,
@@ -496,7 +496,7 @@ void tui::UIElement::RenderBackground() const {
 
 void tui::UIElement::RenderBorder() const {
     RectF unBorderedBounds = GetUnBorderedBounds();
-    RectF borderBounds = GetVisibleBounds();
+    RectF borderBounds = GetBorderedBounds();
     RectF{ borderBounds.x, borderBounds.y, borderBounds.width, borderTopWidth }.Draw(borderColor);
     RectF{ borderBounds.x, borderBounds.y, borderLeftWidth, borderBounds.height }.Draw(borderColor);
     RectF{ borderBounds.x, unBorderedBounds.y + unBorderedBounds.height, borderBounds.width, borderBottomWidth }.Draw(borderColor);
@@ -547,7 +547,7 @@ void tui::UIElement::ClippingPreorderTraversal
 
 optional<RectF> tui::UIElement::GenOwnClipRect() {
     return HasPersonalClipping()
-        ? optional<RectF>{ GetVisibleBounds() }
+        ? optional<RectF>{ GetBorderedBounds() }
         : std::nullopt;
 }
 
@@ -636,4 +636,8 @@ void tui::UIElement::RenderText() const {
     RectF contentBounds = GetContentBounds();
     raylib::Text(Fonts::Get(fontStyle), text, fontSize, 0, color)
             .Draw((int) contentBounds.x, (int) contentBounds.y);
+}
+
+RectF tui::UIElement::GetVisibleBounds() const {
+    return *IntersectionRects(GetBorderedBounds(), clipRect);
 }
