@@ -85,7 +85,9 @@ void Program::ContentStripUI() {
 
 void Program::BottomBarUI() {
     Span bottomBar ("bottom-bar");
-    Text("TODO...", Style{ .fontSize = 20, .padding = 5, .color = GRAY });
+
+    Vec2 mousePos = raylib::Mouse::GetPosition();
+    Text("mouse: "s + std::to_string((int) mousePos.x) + ", " + std::to_string((int) mousePos.y), Style{ .fontSize = 20, .padding = 5, .color = GRAY });
     Text("FPS: "s + std::to_string(GetFPS()), Style{ .fontSize = 20, .padding = 5, .color = GRAY });
 }
 

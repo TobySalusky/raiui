@@ -19,15 +19,21 @@ tui::FilePickerDirectory::FilePickerDirectory(FilePickerDirectoryNode& node, int
                 IndentClass("directory-line", depth),
                 InteractiveStyles { "directory-line-highlight", "directory-line-active" }
         );
-        if (!node.children.empty()) {
+
+        bool hasChildren = !node.children.empty();
+        { // caret and toggling functionality
             Button caretButton;
-            Text(node.open ? "v" : ">", CStyle{"file-picker-text", {.paddingHoriz = 5}});
-            if (caretButton.Pressed() || dirLine.DoublePressed()) {
+            string buttonText = [&](){
+                if (!hasChildren) { return " "; }
+                return node.open ? "v" : ">";
+            }();
+            Text(buttonText, CStyle{"file-picker-text", {.paddingHoriz = 5}});
+
+            if (hasChildren && (caretButton.Pressed() || dirLine.DoublePressed())) {
                 node.Toggle();
             }
-        } else {
-            Text(" ", CStyle{"file-picker-text", {.paddingHoriz = 5}});
         }
+
         Leaf("file-picker-folder-icon");
         Text(node.name, "file-picker-text");
     }
