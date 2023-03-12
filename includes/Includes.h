@@ -2,8 +2,7 @@
 // Created by Tobiathan on 12/10/22.
 //
 
-#ifndef MATHVIEW_INCLUDES_H
-#define MATHVIEW_INCLUDES_H
+#pragma once
 
 // GLOBAL INCLUDES -- these are all accessible by with just `#include "Includes.h"`
 #include "raylib-cpp.hpp"
@@ -83,5 +82,3 @@ using tuple = std::tuple<Args...>;
 #define MAP_FUNC(a) transform([&](auto it) { return a(it); })
 #define FILTER_CALL(a) filter([&](auto it) { return it a; })
 #define FILTER_OUT_CALL(a) filter([&](auto it) { return !it a; })
-
-#endif //MATHVIEW_INCLUDES_H

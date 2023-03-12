@@ -2,8 +2,7 @@
 // Created by Tobiathan on 12/10/22.
 //
 
-#ifndef MATHVIEW_PROGRAM_H
-#define MATHVIEW_PROGRAM_H
+#pragma once
 
 class Program {
 public:
@@ -17,7 +16,13 @@ private:
 
     void Render();
 
-    void LayerUI();
-};
+    void UI();
 
-#endif //MATHVIEW_PROGRAM_H
+    void LayerUI();
+    void BottomBarUI();
+
+    void ContentStripUI();
+
+    void LeftPanelUI();
+    void RightPanelUI();
+};

@@ -9,18 +9,14 @@
 #include "Identification.h"
 
 namespace tui {
-    struct Span : UIComponent {
+    struct Span : OpenUIComponent {
 
         explicit Span(const style_t &style = {}, const id_t& idLike = "", tloc location = tloc::current())
-                     : UIComponent(idLike, location) {
+                     : OpenUIComponent(idLike, location) {
 
             DOM::Current().Attach({.id = id, .style=combined_styles(Style {
                     .flexDir=FlexDirection::Row
             }, style)});
-        }
-
-        ~Span() {
-            DOM::CloseScope();
         }
     };
 }

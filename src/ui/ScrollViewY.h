@@ -4,19 +4,13 @@
 
 #pragma once
 
-#include "Includes.h"
-#include "Identification.h"
-#include "Style.h"
-#include "UIComponent.h"
-#include "Div.h"
-#include "State.h"
-#include "Span.h"
-#include "Interactive.h"
+#include <UIEssentials.h>
+#include <UICommon.h>
 
 namespace tui {
-    struct ScrollViewY : public UIComponent {
+    struct ScrollViewY : public OpenUIComponent {
         explicit ScrollViewY(const style_t& outerStyle = {}, const style_t& innerStyle = {}, const id_t& idLike = "", tloc location = tloc::current())
-                : UIComponent(idLike, location) {
+                : OpenUIComponent(idLike, location) {
             Slot slot;
             ScopeId scopeId (id);
 
@@ -102,10 +96,6 @@ namespace tui {
             } else {
                 scrollGrab = std::nullopt;
             }
-        }
-
-        ~ScrollViewY() { // TODO: use inheritance (OpenUIComponent or something) to make this not necessary to replicate
-            DOM::CloseScope();
         }
 
     private:

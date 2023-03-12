@@ -11,16 +11,12 @@
 #include "UIComponent.h"
 
 namespace tui {
-    struct Div : UIComponent {
+    struct Div : OpenUIComponent {
 
         explicit Div(const style_t &style = {}, const id_t& idLike = "",
                      tloc location = tloc::current())
-                          : UIComponent(idLike, location) {
+                          : OpenUIComponent(idLike, location) {
             DOM::Current().Attach({.id = id, .style=combined_styles(Style {.flexDir=FlexDirection::Column}, style)});
-        }
-
-        ~Div() {
-            DOM::CloseScope();
         }
     };
 }

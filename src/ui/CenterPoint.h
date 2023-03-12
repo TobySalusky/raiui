@@ -4,20 +4,14 @@
 
 #pragma once
 
+#include <UIEssentials.h>
 #include "DOM.h"
-#include "Style.h"
-#include "Identification.h"
-#include "UIComponent.h"
 
 namespace tui {
-    struct CenterPoint : UIComponent {
+    struct CenterPoint : OpenUIComponent {
         explicit CenterPoint(const style_t &style = {}, const id_t& idLike = "", tloc location = tloc::current())
-            : UIComponent(idLike, location) {
+            : OpenUIComponent(idLike, location) {
             DOM::Current().Attach({.id = id, .style=combined_styles(Style { .dimen = 0.0f, .align = AlignType::Center }, style)});
-        }
-
-        ~CenterPoint() {
-            DOM::CloseScope();
         }
     };
 }

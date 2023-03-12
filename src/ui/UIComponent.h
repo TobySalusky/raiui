@@ -22,6 +22,14 @@ namespace tui {
         }
     };
 
+    struct OpenUIComponent : public UIComponent {
+        OpenUIComponent(const id_t& idLike, tloc location) : UIComponent(idLike, location) {}
+
+        ~OpenUIComponent() {
+            DOM::CloseScope();
+        }
+    };
+
     struct ScopedComponent : public UIComponent {
         ScopeId scopeId;
         ScopedComponent(const id_t& idLike, tloc location)

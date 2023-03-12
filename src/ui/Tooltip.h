@@ -13,11 +13,10 @@
 #include "UIElement.h"
 
 namespace tui {
-    struct TooltipType : UIComponent {
+    struct TooltipType : OpenUIComponent {
         explicit TooltipType(const style_t& style = {}, const id_t& idLike = "",
                          tloc location = tloc::current())
-                     : UIComponent(idLike, location) {
-//            Vec2 mousePos = raylib::Mouse::GetPosition();
+                     : OpenUIComponent(idLike, location) {
             DOM::Current().Attach(
                 {
                     .id = id,
@@ -30,10 +29,6 @@ namespace tui {
                     )
                 }
             );
-        }
-
-        ~TooltipType() {
-            DOM::CloseScope();
         }
     };
 

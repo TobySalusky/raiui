@@ -1,0 +1,11 @@
+.primary-panel {
+    background-color: #323232;
+}
+
+.bottom-bar {
+    width: 1fr;
+    border-top-width: 1px;
+    border-color: dimgray;
+    background-color: #464646;
+    justify-content: space-between;
+}

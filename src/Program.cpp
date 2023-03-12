@@ -58,46 +58,46 @@ void Program::Render() {
     SCREEN_WIDTH = GetScreenWidth();
     SCREEN_HEIGHT = GetScreenHeight();
 
-//    double startUI = GetTime();
     BeginUI();
-    {
-        RayColor panelColor = { 50, 50, 50 };
-
-        Div page (Style { .dimens = {{ SCREEN_WIDTH, SCREEN_HEIGHT }} });
-        FlexVert screenContainer ("fill");
-        {
-            FlexHoriz panelContainer("fill");
-            {
-                Panel panel({ .defaultWidth = 200.0f, .minWidth = 50.0f},
-                            Style{ .backgroundColor = panelColor });
-                FilePicker filePicker("/Users/toby/CLionProjects/TestModule");
-            }
-
-            {
-                Panel panel2({ .dir = PanelDirection::Left, .defaultWidth = 200.0f, .minWidth = 150.0f },
-                             Style{ .align = AlignType::Center, .backgroundColor = panelColor });
-                {
-                    LayerUI();
-                }
-            }
-        }
-        {
-            Span bottomBar ("bottom-bar");
-            Text("TODO...", Style{ .fontSize = 20, .padding = 5, .color = GRAY });
-            Text("FPS: "s + std::to_string(GetFPS()), Style{ .fontSize = 20, .padding = 5, .color = GRAY });
-        }
-    }
+    UI();
     EndUI();
-//    Log("UI took: {}", GetTime() - startUI);
 
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
-//    double startRender = GetTime();
     RenderUI();
-//    Log("Render took: {}", GetTime() - startRender);
 
     EndDrawing();
+}
+
+void Program::UI() {
+    Div page (Style { .dimens = {{ SCREEN_WIDTH, SCREEN_HEIGHT }} });
+    FlexVert screenContainer ("fill");
+    ContentStripUI();
+    BottomBarUI();
+}
+
+void Program::ContentStripUI() {
+    FlexHoriz panelContainer("fill");
+    LeftPanelUI();
+    RightPanelUI();
+}
+
+void Program::BottomBarUI() {
+    Span bottomBar ("bottom-bar");
+    Text("TODO...", Style{ .fontSize = 20, .padding = 5, .color = GRAY });
+    Text("FPS: "s + std::to_string(GetFPS()), Style{ .fontSize = 20, .padding = 5, .color = GRAY });
+}
+
+void Program::LeftPanelUI() {
+    Panel panel({ .defaultWidth = 150.0f, .minWidth = 50.0f}, "primary-panel");
+    FilePicker filePicker("/Users/toby/CLionProjects/TestModule");
+}
+
+void Program::RightPanelUI() {
+    Panel panel2({ .dir = PanelDirection::Left, .defaultWidth = 200.0f, .minWidth = 150.0f },
+                 "primary-panel");
+    LayerUI();
 }
 
 void Program::LayerUI() {

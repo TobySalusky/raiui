@@ -11,11 +11,11 @@
 #include "Identification.h"
 
 namespace tui {
-    struct FlexVert : UIComponent {
+    struct FlexVert : OpenUIComponent {
 
         explicit FlexVert(const style_t &style = {}, const id_t& idLike = "",
                           tloc location = tloc::current())
-                : UIComponent(idLike, location) {
+                : OpenUIComponent(idLike, location) {
             id = gen_id(idLike, location);
             DOM::Current().Attach({.id = id, .style=combined_styles(Style {
                     .flexDir=FlexDirection::Column, .justifyContent = AlignType::SpaceBetween, .alignItems = AlignType::Center
@@ -24,16 +24,12 @@ namespace tui {
 
         explicit FlexVert(AlignType justifyContent = AlignType::SpaceBetween, AlignType alignItems = AlignType::Center, const id_t& idLike = "", tloc location = tloc::current())
                           : FlexVert(Style {.justifyContent = justifyContent, .alignItems = alignItems}, idLike, location) {}
-
-        ~FlexVert() {
-            DOM::CloseScope();
-        }
     };
 
-    struct FlexHoriz : UIComponent {
+    struct FlexHoriz : OpenUIComponent {
 
         explicit FlexHoriz(const style_t &style = {}, const id_t& idLike = "", tloc location = tloc::current())
-                : UIComponent(idLike, location){
+                : OpenUIComponent(idLike, location){
             id = gen_id(idLike, location);
             DOM::Current().Attach({.id = id, .style=combined_styles(Style {
                     .flexDir=FlexDirection::Row, .justifyContent = AlignType::SpaceBetween, .alignItems = AlignType::Center
@@ -42,10 +38,6 @@ namespace tui {
 
         explicit FlexHoriz(AlignType justifyContent = AlignType::SpaceBetween, AlignType alignItems = AlignType::Center, const id_t& idLike = "", tloc location = tloc::current())
                 : FlexHoriz(Style {.justifyContent = justifyContent, .alignItems = alignItems}, idLike, location) {}
-
-        ~FlexHoriz() {
-            DOM::CloseScope();
-        }
     };
 
 }

@@ -4,10 +4,7 @@
 
 #pragma once
 
-#include "Includes.h"
-#include "UIComponent.h"
-#include "State.h"
-#include "OptStyles.h"
+#include <UIEssentials.h>
 
 namespace tui {
     struct InteractiveStyles {
@@ -23,13 +20,13 @@ namespace tui {
         }
     };
 
-    struct Interactive : public UIComponent {
+    struct Interactive : public OpenUIComponent {
         explicit Interactive(const InteractiveClass& interactiveClass, const id_t& idLike = "", tloc location = tloc::current())
                 : Interactive(interactiveClass.className, interactiveClass.CreateInteractiveStyles(), idLike, location) {}
 
 
             explicit Interactive(const style_t& style = {}, const InteractiveStyles& interactiveStyles = {}, const id_t& idLike = "", tloc location = tloc::current())
-                : UIComponent(idLike, location) {
+                : OpenUIComponent(idLike, location) {
             bool& held = UseRef(false, id_append { id });
             optional<float>& lastPressed = UseRef<optional<float>>(std::nullopt, id_append { id });
 
@@ -65,10 +62,6 @@ namespace tui {
                 }};
 
             DOM::Current().Attach({.id = id, .style = interactiveStyle});
-        }
-
-        ~Interactive() {
-            DOM::CloseScope();
         }
 
         [[nodiscard]] bool Pressed() const { return pressed; }

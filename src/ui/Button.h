@@ -75,11 +75,11 @@ namespace tui {
     };
 
 
-    struct Button : UIComponent {
+    struct Button : OpenUIComponent {
 
         template<content_like content_t = content<>>
         explicit Button(const content_t& btnContent = content{}, const style_t& style = {}, const id_t& idLike = "", tloc location = tloc::current())
-                : UIComponent(idLike, location) {
+                : OpenUIComponent(idLike, location) {
 
             bool& held = UseRef(false, id_append{ id });
 
@@ -102,10 +102,6 @@ namespace tui {
 
                 down = held;
             }
-        }
-
-        ~Button() {
-            DOM::CloseScope();
         }
 
         [[nodiscard]] bool Pressed() const { return pressed; }

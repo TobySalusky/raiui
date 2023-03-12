@@ -2,8 +2,7 @@
 // Created by Tobiathan on 12/16/22.
 //
 
-#ifndef MATHVIEW_LOGGER_H
-#define MATHVIEW_LOGGER_H
+#pragma once
 
 #include <string_view>
 #include <iostream>
@@ -28,6 +27,3 @@ void Log(const std::string_view& fmt, const FirstArg& arg1, const SecondArg& arg
     std::cout << fmt.substr(0, i) << arg1;
     Log(fmt.substr(i + 2), arg2, args...);
 }
-
-
-#endif //MATHVIEW_LOGGER_H

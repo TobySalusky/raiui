@@ -2,8 +2,7 @@
 // Created by Tobiathan on 12/10/22.
 //
 
-#ifndef MATHVIEW_FONTS_H
-#define MATHVIEW_FONTS_H
+#pragma once
 
 #include "Includes.h"
 #include "Paths.h"
@@ -43,6 +42,3 @@ public:
 private:
     static inline unique_ptr<AvailableFonts> fontHolder = {};
 };
-
-
-#endif //MATHVIEW_FONTS_H

@@ -4,14 +4,12 @@
 
 #pragma once
 
-#include "State.h"
-#include "Identification.h"
-#include "ScopeId.h"
+#include <UIEssentials.h>
+
 #include "Div.h"
-#include "Style.h"
 #include "Button.h"
 #include "Span.h"
-#include "Slot.h"
+
 #include <algorithm>
 
 namespace tui {
@@ -27,9 +25,9 @@ namespace tui {
         float maxWidth = MAXFLOAT;
     };
 
-    struct Panel : UIComponent {
+    struct Panel : OpenUIComponent {
         explicit Panel (const PanelOptions& options = {}, const style_t &style = {}, id_t&& idLike = "", tloc location = tloc::current())
-                : UIComponent(idLike, location) {
+                : OpenUIComponent(idLike, location) {
             Slot slot;
             ScopeId scopeId (id);
 
@@ -63,10 +61,6 @@ namespace tui {
             }
 
             if (dir == PanelDirection::Left) { PanelContentPane(); }
-        }
-
-        ~Panel() {
-            DOM::CloseScope();
         }
     };
 }
