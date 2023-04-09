@@ -27,8 +27,8 @@ namespace tui {
             auto contentDef = predef();
 
             // update state
-            optional<UIElement*> prevClipContainer = DOM::Previous().Lookup(clipDef.id);
-            optional<UIElement*> prevContentContainer = DOM::Previous().Lookup(contentDef.id);
+            optional_ref<UIElement> prevClipContainer = DOM::Previous().Lookup(clipDef.id);
+            optional_ref<UIElement> prevContentContainer = DOM::Previous().Lookup(contentDef.id);
 
             bool scrollBar = false;
             float maxScroll = 0.0f;
@@ -36,15 +36,15 @@ namespace tui {
             float scrollBarTopUnits = 0.0f;
             float scrollBarTop = 0.0f;
             if (prevClipContainer && prevContentContainer) { // TODO: make func
-                float clipHeight = (**prevClipContainer).GetClientBounds().height;
-                float contentHeight = (**prevContentContainer).GetClientBounds().height;
+                float clipHeight = prevClipContainer->GetClientBounds().height;
+                float contentHeight = prevContentContainer->GetClientBounds().height;
                 if (contentHeight <= clipHeight) {
                     // no need for scrolling!
                     scrollY = 0.0f;
                 } else {
                     // scrolling necessary...
                     maxScroll = contentHeight - clipHeight;
-                    bool clipHovered = (**prevClipContainer).GetVisibleBounds().CheckCollision(raylib::Mouse::GetPosition()); // TODO: interactive-rect
+                    bool clipHovered = prevClipContainer->GetVisibleBounds().CheckCollision(raylib::Mouse::GetPosition()); // TODO: interactive-rect
 
                     if (clipHovered) {
                         scrollY -= raylib::Mouse::GetWheelMove() * SCROLL_VIEW_SCROLL_SPEED;

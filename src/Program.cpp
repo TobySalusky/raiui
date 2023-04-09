@@ -22,6 +22,8 @@
 #include "ui/FilePicker.h"
 #include "ui/OptStyles.h"
 #include "ui/ImageLeaf.h"
+#include "ui/TextInput.h"
+#include "ui/KeyInput.h"
 
 using namespace tui;
 using namespace tutil;
@@ -52,7 +54,9 @@ void Program::Run() {
         Render();
     }
 }
-void Program::Update(float deltaTime) {}
+void Program::Update(float deltaTime) {
+    KeyInput::Collect();
+}
 
 void Program::Render() {
     SCREEN_WIDTH = GetScreenWidth();
@@ -100,6 +104,7 @@ void Program::RightPanelUI() {
     Panel panel2({ .dir = PanelDirection::Left, .defaultWidth = 200.0f, .minWidth = 150.0f },
                  "primary-panel");
     LayerUI();
+//    TextInput input;
 }
 
 void Program::LayerUI() {
@@ -129,7 +134,7 @@ void Program::LayerUI() {
                     Div eye(layer.visible ? "layer-eye-open" : "layer-eye-close");
 
                     if (auto tp = DelayTooltip(toggle)) {
-                        Text("Toggle Visibility", Style{ .fontSize = 16, .padding = 5, .borderRadius = 3, .color = "ghostwhite", .backgroundColor = DARKGRAY, .overflow = OverflowMode::Hidden });
+                        Text("Toggle Visibility", "dark-tooltip");
                     }
 
                     if (toggle.Pressed()) { layer.visible ^= true; }
@@ -153,7 +158,7 @@ void Program::LayerUI() {
                 onPress();
             }
             if (auto tp = Tooltip(button)) {
-                Text(tooltip, Style{ .fontSize = 16, .padding = 5, .borderRadius = 3, .color = "ghostwhite", .backgroundColor = DARKGRAY });
+                Text(tooltip, "dark-tooltip");
             }
         };
 
@@ -164,6 +169,9 @@ void Program::LayerUI() {
         LayerButton("-", "Delete layer", [&](){
             if (!layers.empty()) { layers.pop_back(); }
         });
+
+        static string it = "hi";
+        TextInput input(it);
     }
 }
 

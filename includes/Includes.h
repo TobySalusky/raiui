@@ -19,6 +19,7 @@
 #include "../src/util/Logger.h"
 #include "../src/util/Util.h"
 #include "../src/ui/tloc.h"
+#include "../src/util/optional_ref.h"
 
 // GLOBAL typedefs/aliases -- shorten lengthy type names for more ergonomic coding :)
 

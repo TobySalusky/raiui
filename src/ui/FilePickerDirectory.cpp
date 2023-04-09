@@ -23,10 +23,12 @@ tui::FilePickerDirectory::FilePickerDirectory(FilePickerDirectoryNode& node, int
         bool hasChildren = !node.children.empty();
         { // caret and toggling functionality
             Button caretButton;
-            string buttonText = [&](){
-                if (!hasChildren) { return " "; }
-                return node.open ? "v" : ">";
-            }();
+
+            string buttonText =
+                hasChildren
+                    ? (node.open ? "v" : ">")
+                    : " ";
+
             Text(buttonText, CStyle{"file-picker-text", {.paddingHoriz = 5}});
 
             if (hasChildren && (caretButton.Pressed() || dirLine.DoublePressed())) {

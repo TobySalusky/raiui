@@ -47,6 +47,19 @@ namespace tui {
         string id;
     };
 
+    template<typename T>
+    void PullState(T& stateMember, const id_t& idLike = "", tloc location = tloc::current()) {
+        string id = gen_id(idLike, location);
+
+        auto& stateMap = AppState::Globals();
+        if (stateMap.contains(id)) {
+            stateMember = *std::any_cast<T>(&AppState::Globals()[id]);
+        } else {
+            // initial load
+            stateMap[id] = stateMap;
+        }
+    }
+
     // prefer this for trivial/cheap types -- no I/O or complex logic :)
     template<typename T>
     T& UseRef(T defaultValue, const id_t& idLike = "", tloc location = tloc::current()) {

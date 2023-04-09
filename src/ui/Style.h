@@ -264,6 +264,8 @@ namespace tui {
 
     style_t to_style(const string& classList);
 
+    Style class_segment_to_style(string_view classSegment);
+
     style_t to_style(const ClassAndStyle& classListAndStyle);
 
     style_t combined_styles(const style_t& s1, const style_t& s2);

@@ -31,8 +31,7 @@ namespace tui {
             optional<float>& lastPressed = UseRef<optional<float>>(std::nullopt, id_append { id });
 
             if (auto prevRes = UsePrev()) {
-                UIElement& prev = **prevRes;
-                hovered = prev.GetVisibleBounds().CheckCollision(raylib::Mouse::GetPosition()); // TODO: interactive-rect
+                hovered = prevRes->GetVisibleBounds().CheckCollision(raylib::Mouse::GetPosition()); // TODO: interactive-rect
 
                 if (hovered && raylib::Mouse::IsButtonPressed(MOUSE_BUTTON_LEFT)) {
                     pressed = true;

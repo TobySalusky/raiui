@@ -2,9 +2,7 @@
 // Created by Tobiathan on 11/19/22.
 //
 
-#ifndef MARIOGAME_TEXTURES_H
-#define MARIOGAME_TEXTURES_H
-
+#pragma once
 #include "Includes.h"
 
 class Textures {
@@ -15,6 +13,3 @@ public:
 private:
     static inline unordered_map<string, RayTexture> textureMap = {};
 };
-
-
-#endif //MARIOGAME_TEXTURES_H

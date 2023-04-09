@@ -64,7 +64,7 @@ string tui::DOM::Stringify() {
     return root.RecursiveStringify();
 }
 
-optional<tui::UIElement*> tui::DOM::Lookup(const string &id) {
+optional_ref<tui::UIElement> tui::DOM::Lookup(const string &id) {
     if (id.empty() || !elementLookup.contains(id)) {
         return std::nullopt;
     }

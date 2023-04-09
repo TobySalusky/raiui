@@ -86,9 +86,8 @@ namespace tui {
             DOM::Current().Attach({.id = id, .style=style});
             apply_content(btnContent);
 
-            if (auto prevRes = DOM::Previous().Lookup(id)) {
-                UIElement& prev = **prevRes;
-                hovered = prev.GetVisibleBounds().CheckCollision(raylib::Mouse::GetPosition()); // TODO: interactive-rect
+            if (auto prev = UsePrev()) {
+                hovered = prev->GetVisibleBounds().CheckCollision(raylib::Mouse::GetPosition()); // TODO: interactive-rect
 
                 if (hovered && raylib::Mouse::IsButtonPressed(MOUSE_BUTTON_LEFT)) {
                     pressed = true;

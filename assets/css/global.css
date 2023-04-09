@@ -2,6 +2,14 @@
     dimen: 1fr;
 }
 
+.fill-width {
+    width: 1fr;
+}
+
+.fill-height {
+    height: 1fr;
+}
+
 .d-50 {
     dimen: 50%;
 }

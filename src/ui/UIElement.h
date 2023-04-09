@@ -31,6 +31,8 @@ namespace tui {
         bool IsVisible(); // determine whether to render element
         static bool RectanglesMatch(const optional<RectF>& rect1, const optional<RectF>& rect2);
 
+        void AddRenderCall(const std::function<void(UIElement&)>& renderCall);
+
     public: // TODO: make private
         string id;
 
@@ -70,7 +72,10 @@ namespace tui {
         std::list<UIElement> children = {}; // list is necessary (otherwise need unique/shared ptr) since elements are not moved (ruins elementLookup)
         UIElement* parent = nullptr;
 
+        optional<vector<std::function<void(UIElement&)>>> additionalRenderCalls = std::nullopt;
+
     private:
+        // non-user-facing? TODO: organize these please
         void ApplyStyle();
 
         void JustifyChildren();

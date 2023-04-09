@@ -17,7 +17,7 @@ namespace tui {
 
         UIComponent(const id_t& idLike, tloc location) : id(gen_id(idLike, location)) {}
 
-        [[nodiscard]] optional<UIElement*> UsePrev() const {
+        [[nodiscard]] optional_ref<UIElement> UsePrev() const {
             return DOM::Previous().Lookup(id);
         }
     };
@@ -39,6 +39,6 @@ namespace tui {
     template <typename T>
     concept ui_component = requires (T val) {
         { val.id } -> std::convertible_to<string>;
-        { val.UsePrev() } -> std::convertible_to<optional<UIElement*>>;
+        { val.UsePrev() } -> std::convertible_to<optional_ref<UIElement>>;
     };
 }

@@ -1,5 +1,4 @@
 #include "Program.h"
-#include "util/Logger.h"
 
 int main() {
     Program program;

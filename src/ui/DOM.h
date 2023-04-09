@@ -33,7 +33,7 @@ namespace tui {
         void Register(const UIElement& elem);
         void PopAttach(UIElement elem) { Attach(std::move(elem)); Pop(); }
 
-        optional<UIElement*> Lookup(const string& id);
+        optional_ref<UIElement> Lookup(const string& id);
 
         bool HasScopeId();
         const string& GetScopeId();

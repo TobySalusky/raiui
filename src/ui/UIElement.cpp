@@ -641,3 +641,11 @@ void tui::UIElement::RenderText() const {
 RectF tui::UIElement::GetVisibleBounds() const {
     return *IntersectionRects(GetBorderedBounds(), clipRect);
 }
+
+void tui::UIElement::AddRenderCall(const std::function<void(UIElement&)>& renderCall) {
+    if (additionalRenderCalls) {
+        additionalRenderCalls->push_back(renderCall);
+    } else {
+        additionalRenderCalls = { renderCall };
+    }
+}
