@@ -34,3 +34,5 @@ namespace tui {
 
     string with_scope_id(const string& id);
 }
+
+using tuid_t = tui::id_t;

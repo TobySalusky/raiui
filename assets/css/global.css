@@ -17,3 +17,19 @@
 .center {
     align: center;
 }
+
+.h-line {
+    width: 1fr;
+    height: 1px;
+    background-color: white;
+}
+
+.v-line {
+    width: 1px;
+    height: 1fr;
+    background-color: white;
+}
+
+.square {
+    aspect-ratio: 1 / 1;
+}

@@ -3,7 +3,10 @@
 #include "Styles.h"
 
 void tui::BeginUI() {
-    // TODO: do nothing???????
+    // TODO: perhaps move this??
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        DOM::UnFocus();
+    }
 }
 
 void tui::EndUI() {
@@ -22,10 +25,10 @@ void tui::Initialize(const TuiInitializationSettings& settings) {
     Main::Initialize(settings);
 
     Styles::Initialize();
+
     if (settings.cssDirectoryPath) {
         Styles::LoadCssDirectory(*settings.cssDirectoryPath);
     }
-//    Styles::LoadCssDirectory(Paths::Asset("css"));
 
     DOM::Initialize();
 //    AppState::Initialize();

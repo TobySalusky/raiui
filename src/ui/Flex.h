@@ -28,16 +28,16 @@ namespace tui {
 
     struct FlexHoriz : OpenUIComponent {
 
-        explicit FlexHoriz(const style_t &style = {}, const id_t& idLike = "", tloc location = tloc::current())
+        explicit FlexHoriz(const style_t &style = {}, AlignType justifyContent = AlignType::SpaceBetween, AlignType alignItems = AlignType::Center, const id_t& idLike = "", tloc location = tloc::current())
                 : OpenUIComponent(idLike, location){
             id = gen_id(idLike, location);
             DOM::Current().Attach({.id = id, .style=combined_styles(Style {
-                    .flexDir=FlexDirection::Row, .justifyContent = AlignType::SpaceBetween, .alignItems = AlignType::Center
+                    .flexDir=FlexDirection::Row, .justifyContent = justifyContent, .alignItems = alignItems
             }, style)});
         }
 
         explicit FlexHoriz(AlignType justifyContent = AlignType::SpaceBetween, AlignType alignItems = AlignType::Center, const id_t& idLike = "", tloc location = tloc::current())
-                : FlexHoriz(Style {.justifyContent = justifyContent, .alignItems = alignItems}, idLike, location) {}
+                : FlexHoriz({}, justifyContent, alignItems, idLike, location) {}
     };
 
 }

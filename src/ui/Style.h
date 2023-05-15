@@ -10,6 +10,7 @@
 #include "Main.h"
 
 #define TUI_STYLE_STEAL(arg) if (other.arg) { arg = other.arg; }
+//TODO:?
 
 // TODO: add FlexDirection ColumnReverse and RowReverse (then FlexStart/FlexEnd work for reverse's as well [Start/End will not])
 enum class AlignType {
@@ -36,7 +37,7 @@ struct z_add {
 #define z_down z_add{-1}
 
 using ZIndexVariant = variant<int, z_add>;
-using SizeVariant = variant<float, int, tui::percent, tui::fraction>;
+using SizeVariant = variant<float, int, tui::percent, tui::fraction, tui::view_width_pct, tui::view_height_pct>;
 using ColorVariant = variant<RayColor, string>;
 using TextureVariant = variant<RayTexture*, string>;
 
@@ -44,6 +45,15 @@ struct Dimensions {
     SizeVariant width {};
     SizeVariant height {};
 };
+
+namespace tui {
+    struct UIElement;
+}
+
+struct RenderParams {
+    tui::UIElement& elem;
+};
+using render_fn_t = std::function<void(const RenderParams&)>;
 
 class Style {
 public:
@@ -108,6 +118,10 @@ public:
     optional<float> top = std::nullopt;
 
     optional<ZIndexVariant> zIndex = std::nullopt;
+
+    optional<int> tabIndex = std::nullopt;
+
+    optional<render_fn_t> renderFn = std::nullopt;
 
 //    optional<OverflowMode> overflowX = std::nullopt; // TODO:
 //    optional<OverflowMode> overflowY = std::nullopt;
@@ -242,6 +256,16 @@ public:
 
         TUI_STYLE_STEAL(left);
         TUI_STYLE_STEAL(top);
+
+        TUI_STYLE_STEAL(tabIndex);
+
+        TUI_STYLE_STEAL(renderFn);
+//        if (other.renderFn) { TODO
+//            renderFn = !renderFn.has_value()
+//                ? other.renderFn
+//                : [oldFn=*renderFn, otherFn=*other.renderFn]
+//                    (const RenderParams& params){ oldFn(params); otherFn(params); };
+//        }
     }
 };
 
@@ -310,6 +334,8 @@ struct style_t {
         left = simplified.left;
         top = simplified.top;
         zIndex = simplified.zIndex;
+        tabIndex = simplified.tabIndex;
+        renderFn = simplified.renderFn;
     }
 
     void AddToTop(const style_t& other) {
@@ -359,11 +385,24 @@ struct style_t {
 
         TUI_STYLE_STEAL(left);
         TUI_STYLE_STEAL(top);
+
+        TUI_STYLE_STEAL(tabIndex);
+
+        TUI_STYLE_STEAL(renderFn);
+//        if (other.renderFn) { TODO
+//            renderFn = !renderFn.has_value()
+//                ? other.renderFn
+//                : [oldFn=*renderFn, otherFn=*other.renderFn]
+//                    (const RenderParams& params){ oldFn(params); otherFn(params); };
+//        }
     }
 
     style_t(const char* classList) : style_t(string(classList)) {}
     style_t(const string& classList) : style_t(tui::to_style(classList)) {}
     style_t(const CStyle& classAndStyle) : style_t(tui::to_style(classAndStyle)) {}
+
+    [[nodiscard]] style_t with(const style_t& other) const { return tui::combined_styles(*this, other); }
+    [[nodiscard]] style_t withStyle(const Style& other) const { return tui::combined_styles(*this, other); }
 
     optional<float> fontSize = std::nullopt;
     optional<FontStyle> fontStyle = std::nullopt;
@@ -412,4 +451,8 @@ struct style_t {
     optional<float> top = std::nullopt;
 
     optional<ZIndexVariant> zIndex = std::nullopt;
+
+    optional<int> tabIndex = std::nullopt;
+
+    optional<render_fn_t> renderFn = std::nullopt;
 };

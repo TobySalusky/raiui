@@ -46,6 +46,8 @@ Style tui::class_segment_to_style(string_view classSegment) {
             { "border-c", "border-color" },
             { "border-w", "border-width" },
             { "rad", "border-radius" },
+            { "p", "padding" },
+            { "m", "margin" },
         };
 
         const auto AddCss = [&](const string& name, const string& propertyContent) {
@@ -54,21 +56,20 @@ Style tui::class_segment_to_style(string_view classSegment) {
 
         if (simpleSpecifierTable.contains(styleSpecifier)) {
             AddCss(simpleSpecifierTable[styleSpecifier], content);
-        } else {
-            if (styleSpecifier == "border") {
-                const auto [borderWidth, borderColor] = dole<2>(
-                        content
-                        | str_split('-')
-                        | MAP_FUNC(string)
-                        | to_vector()
-                );
+        } else if (styleSpecifier == "border") {
+            const auto [borderWidth, borderColor] = dole<2>(
+                    content
+                    | str_split('-')
+                    | MAP_FUNC(string)
+                    | to_vector()
+            );
 
-                AddCss("border-width", borderWidth);
-                AddCss("border-color", borderColor);
-            } else {
-                AddCss(styleSpecifier, content); // TODO: yuck
-            }
+            AddCss("border-width", borderWidth);
+            AddCss("border-color", borderColor);
+        } else {
+            AddCss(styleSpecifier, content); // TODO: yuck
         }
+
 
         return CssParser::CssBodyToStyle(cssContent);
 

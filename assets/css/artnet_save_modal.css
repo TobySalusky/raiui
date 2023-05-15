@@ -1,0 +1,76 @@
+.modal-screen-dim {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #00000088;
+}
+
+.modal-container {
+    dimen: 80%;
+    background-color: #313236;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.modal-title {
+    font-size: 42px;
+    color: ghostwhite;
+}
+
+.save-modal-button {
+    background-color: #5b6269;
+    align: center;
+    padding: 20px;
+    margin-horiz: 10px;
+    border-radius: 10px;
+}
+
+.save-modal-button-text {
+    color: ghostwhite;
+    font-size: 42px;
+}
+
+.modal-input-container {
+    width: 50%;
+}
+
+.modal-input {
+    background-color: #5b6269;
+    border-radius: 5px;
+    padding: 5px;
+    width: 1fr;
+    color: whitesmoke;
+}
+
+.modal-file-path-input-text-match {
+    background-color: #9a8a76;
+    color: #4be000;
+}
+
+.modal-file-path-input-text-non-match {
+    color: orange;
+}
+
+.modal-suggestion-container {
+    border-width: 1px;
+    border-color: #656565;
+    background-color: #252525;
+    width: 500px;
+    height: 100px;
+}
+
+.modal-suggestion-box {
+    width: 1fr;
+}
+
+.modal-suggestion-box-hover {
+    background-color: #313131;
+}
+
+.modal-suggestion-box-active {
+    background-color: #414141;
+}

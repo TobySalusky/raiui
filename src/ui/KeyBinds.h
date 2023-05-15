@@ -15,6 +15,8 @@ enum class KeyBind {
     ARROW_RIGHT, SUPER_ARROW_RIGHT,
     ARROW_UP, SUPER_ARROW_UP,
     ARROW_DOWN, SUPER_ARROW_DOWN,
+    TAB_BACKWARDS, TAB_FORWARDS,
+    INPUT_ENTER
 };
 
 class KeyBinds {
@@ -57,6 +59,14 @@ public:
                 return !KeyInput::SuperDown() && KeyInput::Pressed(KEY_DOWN);
             case SUPER_ARROW_DOWN:
                 return KeyInput::SuperDown() && KeyInput::Pressed(KEY_DOWN);
+
+            case TAB_BACKWARDS:
+                return KeyInput::ShiftDown() && KeyInput::Pressed(KEY_TAB);
+            case TAB_FORWARDS:
+                return !KeyInput::ShiftDown() && KeyInput::Pressed(KEY_TAB);
+
+            case INPUT_ENTER:
+                return KeyInput::Pressed(KEY_ENTER);
 
             default:
                 throw std::runtime_error("No such keyBind!");

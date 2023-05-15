@@ -13,7 +13,7 @@ void KeyInput::Collect() {
         if (IsKeyReleased(key)) { keysReleased.push_back(key); }
     }
     for (auto keyReleased : keysReleased) {
-        down.erase(keyReleased);
+        down.erase(keyReleased); // TODO: fix! ?? KEY_LEFT_SUPER is released whenever KEY_BACKSPACE is pressed!?!?!
     }
 
     // add hit keys

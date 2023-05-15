@@ -147,3 +147,17 @@ void tui::DOM::Render() {
 int tui::DOM::GetAndIncrementCountForId(const string& id) {
     return elementIdCountMap[id]++;
 }
+
+void tui::DOM::Focus(const string& id) {
+    if (focusedId) { UnFocus(); }
+    focusedId = id;
+}
+
+void tui::DOM::UnFocus() {
+    if (focusedId) { prevFocusedId = focusedId; }
+    focusedId = std::nullopt;
+}
+
+const optional<string>& tui::DOM::FocusedId() {
+    return focusedId;
+}

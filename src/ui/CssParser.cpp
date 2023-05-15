@@ -140,6 +140,12 @@ void CssParser::ApplyCssLineToStyle(Style& style, string_view line) {
         if (sv.ends_with("%")) {
             return tui::percent { AsFloat(TrimRightNonNum(sv)) };
         }
+        if (sv.ends_with("vw")) {
+            return tui::view_width_pct { AsFloat(TrimRightNonNum(sv)) };
+        }
+        if (sv.ends_with("vh")) {
+            return tui::view_height_pct { AsFloat(TrimRightNonNum(sv)) };
+        }
         return AsFloat(sv);
     };
 
@@ -223,6 +229,7 @@ void CssParser::ApplyCssLineToStyle(Style& style, string_view line) {
 
     // >> INTS =========================
     TryIntApply("z-index", style.zIndex); // TODO: add relative zIndex?
+    TryIntApply("tab-index", style.tabIndex);
 
     // >> ASPECT RATIO ===============
     TryAspectRatio("aspect-ratio", style.aspectRatio);

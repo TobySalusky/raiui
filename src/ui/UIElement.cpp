@@ -37,6 +37,10 @@ void tui::UIElement::Render(const RenderInfo& info) {
         RenderText();
     }
 
+    if (HasCustomRenderFn()) {
+        (*style.renderFn)({ *this });
+    }
+
     if (endClip) { EndClipRect(); }
 }
 
@@ -302,7 +306,7 @@ void tui::UIElement::AlignChildren() {
 #define TUI_UI_ELEMENT_STYLE_STEAL_COLOR(arg) if (style.arg) { arg = ColorConverter::to_color(*style.arg); }
 #define TUI_UI_ELEMENT_STYLE_STEAL_TOP_BOTTOM_LEFT_RIGHT(arg) if (style.arg) { arg ## Top = *style.arg; arg ## Bottom = *style.arg; arg ## Left = *style.arg; arg ## Right = *style.arg; }
 
-#define TUI_UI_ELEMENT_STYLE_STEAL_TRIVIAL_SIZE_VARIANT(arg) if (style.arg) { if (std::holds_alternative<float>(*style.arg)) { arg = std::get<float>(*style.arg); } else if (std::holds_alternative<int>(*style.arg)) { arg = std::get<int>(*style.arg); } }
+#define TUI_UI_ELEMENT_STYLE_STEAL_TRIVIAL_SIZE_VARIANT(arg) if (style.arg) { if (std::holds_alternative<float>(*style.arg)) { arg = std::get<float>(*style.arg); } else if (std::holds_alternative<int>(*style.arg)) { arg = std::get<int>(*style.arg); } else if (std::holds_alternative<view_width_pct>(*style.arg)) { arg = std::get<view_width_pct>(*style.arg).value / 100.0f * GetScreenWidth(); } else if (std::holds_alternative<view_height_pct>(*style.arg)) { arg = std::get<view_height_pct>(*style.arg).value / 100.0f * GetScreenHeight(); } }
 
 void tui::UIElement::ApplyStyle() {
     TUI_UI_ELEMENT_STYLE_STEAL_TRIVIAL_SIZE_VARIANT(width);
@@ -594,7 +598,7 @@ bool tui::UIElement::IsVisible() {
 
 bool tui::UIElement::HasRenderables() const {
     // TODO: figure out if size is non-zero ?? for background/border??
-    return HasText() || HasBorder() || HasBackground() || HasTexture();
+    return HasText() || HasBorder() || HasBackground() || HasTexture() || HasCustomRenderFn();
 }
 
 bool tui::UIElement::HasVisibleClipRect() const {
@@ -648,4 +652,8 @@ void tui::UIElement::AddRenderCall(const std::function<void(UIElement&)>& render
     } else {
         additionalRenderCalls = { renderCall };
     }
+}
+
+bool tui::UIElement::HasCustomRenderFn() const {
+    return style.renderFn.has_value();
 }

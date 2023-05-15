@@ -5,12 +5,14 @@
 #include "TextInput.h"
 #include "KeyBinds.h"
 
+// helpers
+bool CharIsInlineWhiteSpace(char c) {
+    return c == ' ' || c == '\t';
+}
+
 namespace tui {
     bool TextInput::EnactSpecialInputs() {
         using enum KeyBind;
-
-
-
 
         static vector<tuple<KeyBind, std::function<void(TextInput*)>>> keyBindActions = {
                 // TODO: COPY
@@ -45,27 +47,55 @@ namespace tui {
     }
 
     void TextInput::InsertSequence(const string& inserted) {
-        text = text.substr(0, caretPos) + inserted + text.substr(caretPos);
-        caretPos += (int) inserted.length();
+        text = text.substr(0, my.caretPos) + inserted + text.substr(my.caretPos);
+        my.caretPos += (int) inserted.length();
     }
 
     void TextInput::Backspace() {
-        if (caretPos <= 0) { return; }
-        text = text.substr(0, caretPos - 1) + text.substr(caretPos);
-        caretPos--;
+        if (my.caretPos <= 0) { return; }
+        text = text.substr(0, my.caretPos - 1) + text.substr(my.caretPos);
+        my.caretPos--;
     }
 
-    void TextInput::SuperBackspace() {
-        Backspace(); // TODO:
+    void TextInput::SuperBackspace() { // TODO: add mode for coders (stop on symbols too!)
+        if (my.caretPos <= 0) { return; }
+
+        char prev = text.at(my.caretPos - 1);
+        Backspace();
+
+        while (my.caretPos > 0) {
+            char c = text.at(my.caretPos - 1);
+
+            if (CharIsInlineWhiteSpace(c) && !CharIsInlineWhiteSpace(prev)) { return; }
+            if (c == '\n') { return; }
+
+            Backspace();
+
+            prev = c;
+        }
     }
 
     void TextInput::Delete() {
-        if (caretPos >= text.length()) { return; }
-        text = text.substr(0, caretPos) + text.substr(caretPos + 1);
+        if (my.caretPos >= text.length()) { return; }
+        text = text.substr(0, my.caretPos) + text.substr(my.caretPos + 1);
     }
 
     void TextInput::SuperDelete() {
-        Delete(); // TODO:
+        if (my.caretPos >= text.length()) { return; }
+
+        char prev = text.at(my.caretPos);
+        Delete();
+
+        while (my.caretPos < text.length()) {
+            char c = text.at(my.caretPos);
+
+            if (CharIsInlineWhiteSpace(c) && !CharIsInlineWhiteSpace(prev)) { return; }
+            if (c == '\n') { return; }
+
+            Delete();
+
+            prev = c;
+        }
     }
 
     int TextInput::CalcCaretPos(Vector2 mousePos) {
@@ -91,19 +121,47 @@ namespace tui {
     }
 
     void TextInput::ArrowLeft() {
-        caretPos = std::max(caretPos - 1, 0);
+        my.caretPos = std::max(my.caretPos - 1, 0);
     }
 
     void TextInput::ArrowRight() {
-        caretPos = std::min((int) text.length(), caretPos + 1);
+        my.caretPos = std::min((int) text.length(), my.caretPos + 1);
     }
 
     void TextInput::SuperArrowLeft() {
-        ArrowLeft(); // TODO:
+        if (my.caretPos <= 0) { return; }
+
+        char prev = text.at(my.caretPos - 1);
+        ArrowLeft();
+
+        while (my.caretPos > 0) {
+            char c = text.at(my.caretPos - 1);
+
+            if (CharIsInlineWhiteSpace(c) && !CharIsInlineWhiteSpace(prev)) { return; }
+            if (c == '\n') { return; }
+
+            ArrowLeft();
+
+            prev = c;
+        }
     }
 
     void TextInput::SuperArrowRight() {
-        ArrowRight(); // TODO:
+        if (my.caretPos >= text.length()) { return; }
+
+        char prev = text.at(my.caretPos);
+        ArrowRight();
+
+        while (my.caretPos < text.length()) {
+            char c = text.at(my.caretPos);
+
+            if (CharIsInlineWhiteSpace(c) && !CharIsInlineWhiteSpace(prev)) { return; }
+            if (c == '\n') { return; }
+
+            ArrowRight();
+
+            prev = c;
+        }
     }
 
     void TextInput::Paste() {
@@ -118,6 +176,11 @@ namespace tui {
         for (char c : KeyInput::GetCharsPressed()) {
             TypeChar(c);
         }
+    }
+
+    void TextInput::SetFullText(const string& newText) {
+        text = newText;
+        my.caretPos = (int) newText.size();
     }
 
 } // tui

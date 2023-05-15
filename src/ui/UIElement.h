@@ -99,6 +99,7 @@ namespace tui {
         [[nodiscard]] bool HasBackground() const;
         [[nodiscard]] bool HasTexture() const;
         [[nodiscard]] bool HasText() const;
+        [[nodiscard]] bool HasCustomRenderFn() const;
         [[nodiscard]] bool HasRenderables() const;
         [[nodiscard]] bool HasVisibleClipRect() const;
 

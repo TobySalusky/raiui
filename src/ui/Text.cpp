@@ -5,11 +5,14 @@
 #include "Text.h"
 
 void tui::Text(const string& text, const style_t& style, FontStyle fontStyle) {
-    style_t textStyle = style;
-    float fontSize = textStyle.fontSize.value_or(DEFAULT_FONT_SIZE);
+    float fontSize = style.fontSize.value_or(DEFAULT_FONT_SIZE);
     auto textDimens = raylib::Text(Fonts::Get(fontStyle), text, fontSize).MeasureEx();
 
-    textStyle.AddToTop(Style { .fontSize = fontSize, .fontStyle = fontStyle, .width = textDimens.x, .height = textDimens.y });
+    style_t textStyle = combined_styles(
+        Style{ .fontSize = fontSize, .fontStyle = fontStyle, .width = textDimens.x, .height = textDimens.y },
+        style
+    );
+
     DOM::Current().PopAttach({ .text = text, .style = textStyle });
 }
 

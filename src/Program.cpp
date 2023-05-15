@@ -24,6 +24,8 @@
 #include "ui/ImageLeaf.h"
 #include "ui/TextInput.h"
 #include "ui/KeyInput.h"
+#include "artnet/pages/SaveModal.h"
+#include "artnet/ColorPicker.h"
 
 using namespace tui;
 using namespace tutil;
@@ -62,10 +64,12 @@ void Program::Render() {
     SCREEN_WIDTH = GetScreenWidth();
     SCREEN_HEIGHT = GetScreenHeight();
 
+    // ui
     BeginUI();
     UI();
     EndUI();
 
+    // rendering
     BeginDrawing();
     ClearBackground(RAYWHITE);
 
@@ -79,6 +83,12 @@ void Program::UI() {
     FlexVert screenContainer ("fill");
     ContentStripUI();
     BottomBarUI();
+
+    static bool inModal = false;
+    if (KeyBinds::Pressed(KeyBind::TAB_FORWARDS)) { inModal ^= true; }
+    if (inModal) {
+        art_net::SaveModal();
+    }
 }
 
 void Program::ContentStripUI() {
@@ -97,7 +107,15 @@ void Program::BottomBarUI() {
 
 void Program::LeftPanelUI() {
     Panel panel({ .defaultWidth = 150.0f, .minWidth = 50.0f}, "primary-panel");
-    FilePicker filePicker("/Users/toby/CLionProjects/TestModule");
+    {
+        Div top("fill");
+        static RayColor color = RED;
+        art_net::ColorPicker(color);
+    }
+    {
+        Div bottom("fill");
+        FilePicker filePicker("/Users/toby/CLionProjects/TestModule");
+    }
 }
 
 void Program::RightPanelUI() {

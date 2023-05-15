@@ -29,4 +29,28 @@ namespace tui {
     constexpr fraction operator"" _fr(unsigned long long value) {
         return fraction { static_cast<float>(value) };
     }
+
+    struct view_width_pct {
+        float value;
+    };
+
+    constexpr view_width_pct operator"" _vw(long double value) {
+        return view_width_pct { static_cast<float>(value) };
+    }
+
+    constexpr view_width_pct operator"" _vw(unsigned long long value) {
+        return view_width_pct { static_cast<float>(value) };
+    }
+
+    struct view_height_pct {
+        float value;
+    };
+
+    constexpr view_height_pct operator"" _vh(long double value) {
+        return view_height_pct { static_cast<float>(value) };
+    }
+
+    constexpr view_height_pct operator"" _vh(unsigned long long value) {
+        return view_height_pct { static_cast<float>(value) };
+    }
 }

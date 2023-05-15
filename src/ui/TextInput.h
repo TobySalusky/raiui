@@ -11,38 +11,57 @@
 #include "Interactive.h"
 
 namespace tui {
-    struct TextInput : UIComponent {
-        explicit TextInput(string& text, const style_t& style = {}, const id_t& idLike = "", tloc location = tloc::current())
-                : UIComponent(idLike, location), text(text),
-                    caretPos(UseRef<int>((int) text.length())),
-                    active(UseRef(false))
-        {
+    struct TextInputState {
+        int caretPos = 0;
+    };
 
-            if (active) {
+    struct TextInput : StateComponent<TextInputState> {
+        explicit TextInput(string& text, const style_t& style = {}, const id_t& idLike = "", tloc location = tloc::current())
+                : StateComponent<TextInputState>(idLike, location), text(text)
+        {
+            if (IsFocused()) {
+//                Log("> {} {}", KeyInput::Down(KEY_LEFT_SUPER), KeyInput::SuperDown());
+                if (KeyBinds::Pressed(KeyBind::BACKSPACE) || KeyBinds::Pressed(KeyBind::SUPER_BACKSPACE)) {
+//                    Log("=========== {} {}", KeyInput::Down(KEY_LEFT_SUPER), KeyInput::SuperDown());
+//                    Log("it: {} {}", KeyBinds::Pressed(KeyBind::BACKSPACE), KeyBinds::Pressed(KeyBind::SUPER_BACKSPACE));
+                }
+
                 UseKeyboardInput();
             }
 
             // display UI
-            Interactive inputContainer(OptStyles{
-                    "border:1px-black",
-                    {{ active, "border-c:orange" }}
-                }, {}, id_exact{ id });
-            Text(text, style);
+            Interactive inputContainer(combined_styles(
+                    OptStyles{
+                            "border:1px-black",
+                            {{ IsFocused(), "border-c:orange" }}
+                    },
+                    style
+                    ), {}, id_exact{ id });
+
+            // TODO: split text fields from style or make them inheritable!!
+            style_t textStyle = Style{
+                .fontSize = style.fontSize,
+                .fontStyle = style.fontStyle,
+                .color = style.color
+            };
+
+            Text(text, textStyle);
 
             if (raylib::Mouse::IsButtonPressed(MOUSE_BUTTON_LEFT) && !inputContainer.Pressed()) {
-                active = false;
+                UnFocus();
             }
 
             if (inputContainer.Down()) {
-                active = true;
-                caretPos = CalcCaretPos(raylib::Mouse::GetPosition());
+                Focus();
+                my.caretPos = CalcCaretPos(raylib::Mouse::GetPosition());
             }
         }
 
+        // public methods
+        void SetFullText(const string& newText); // set text & move caret to end
+
     private:
         string& text;
-        int& caretPos;
-        bool& active;
 
         void UseKeyboardInput();
 

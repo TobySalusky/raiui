@@ -44,6 +44,11 @@ namespace tui {
 
         DOM() { SetUp(); }
 
+        static void Focus(const string& id);
+        static void UnFocus();
+
+        static const optional<string>& FocusedId();
+
         // unsafe ----------------------------
         UIElement* GetCurrTop() { return attachStack.empty() ? nullptr : attachStack.top(); }
         void AddBackToTop(UIElement* elPtr) { attachStack.push(elPtr); }
@@ -58,6 +63,8 @@ namespace tui {
 
         void SetUp();
 
+        static inline optional<string> focusedId = std::nullopt;
+        static inline optional<string> prevFocusedId = std::nullopt;
         static inline unique_ptr<DOMGlobals> globals = {};
     };
 
