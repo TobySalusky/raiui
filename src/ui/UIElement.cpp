@@ -60,7 +60,7 @@ void tui::UIElement::BuildDown() { // Second Styling Pass
 
     AlignChildren();
     JustifyChildren();
-    ShiftRelativeChildren();
+    ApplyChildPositioning();
     // recursively build children
     for (auto& child : children) {
         child.BuildDown();
@@ -68,18 +68,20 @@ void tui::UIElement::BuildDown() { // Second Styling Pass
 }
 
 void tui::UIElement::RelativelySizeChildren() {
-    RelativelySizePercentageChildren();
+    RelativelySizePercentageOrRoutineChildren();
     RelativelySizeFractionalChildren();
 }
 
-void tui::UIElement::RelativelySizePercentageChildren() {
+void tui::UIElement::RelativelySizePercentageOrRoutineChildren() {
     const auto contentAttachedChildren = ContentAttachedChildren();
 
     for (auto dir : { PRIMARY, SECONDARY }) {
         for (auto& child : contentAttachedChildren) {
-            const auto ApplyPercentageStyle = [&](auto& styleDimen, float& dimenRef){
+            const auto ApplyPercentageStyle = [&](auto& styleDimen, auto& dimenRef){
                 if (auto perc = tutil::pick<percent>(styleDimen)) {
                     dimenRef = Dimen(dir) * perc->value / 100.0f;
+                } else if (auto routine = tutil::pick<size_routine>(styleDimen)) {
+                    dimenRef = routine->Invoke(Dimen(dir));
                 }
             };
             ApplyPercentageStyle(BorderWidthFirstStyle(dir, child), BorderWidthFirst(dir, child));
@@ -89,6 +91,9 @@ void tui::UIElement::RelativelySizePercentageChildren() {
             ApplyPercentageStyle(PaddingLastStyle(dir, child), PaddingLast(dir, child));
             ApplyPercentageStyle(MarginLastStyle(dir, child), MarginLast(dir, child));
             ApplyPercentageStyle(BorderWidthLastStyle(dir, child), BorderWidthLast(dir, child));
+
+            // positional!
+            ApplyPercentageStyle(PositionalFirstStyle(dir, child), PositionalFirstStyle(dir, child)); // NOTE: top/left are consumed
         }
     }
     ApplyChildrenAspectRatios();
@@ -327,9 +332,6 @@ void tui::UIElement::ApplyStyle() {
 
     TUI_UI_ELEMENT_STYLE_STEAL(position);
 
-    if (style.left) { x = *style.left; }
-    if (style.top) { y = *style.top; }
-
     TUI_UI_ELEMENT_STYLE_STEAL_TRIVIAL_SIZE_VARIANT(paddingTop);
     TUI_UI_ELEMENT_STYLE_STEAL_TRIVIAL_SIZE_VARIANT(paddingBottom);
     TUI_UI_ELEMENT_STYLE_STEAL_TRIVIAL_SIZE_VARIANT(paddingLeft);
@@ -567,16 +569,18 @@ optional<RectF> tui::UIElement::IntersectionRects(const optional<RectF>& rect1, 
     return RectF{ left, top, std::max(left, right) - left, std::max(top, bottom) - top };
 }
 
-void tui::UIElement::ShiftRelativeChildren() {
-    // TODO: sus, cleanup?
+void tui::UIElement::ApplyChildPositioning() {
     for (UIElement& child : children) {
-        if (child.position != PositionType::Relative) { continue; }
+        if (child.position == PositionType::Fixed) {
+            child.x = 0;
+            child.y = 0;
+        }
 
         if (child.style.left) {
-            child.x += *child.style.left;
+            child.x += std::get<float>(*child.style.left);
         }
         if (child.style.top) {
-            child.y += *child.style.top;
+            child.y += std::get<float>(*child.style.top);
         }
     }
 }

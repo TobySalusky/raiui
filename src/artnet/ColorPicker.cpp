@@ -4,42 +4,112 @@
 
 #include "ColorPicker.h"
 #include "../ui/TextInput.h"
+#include "compile/shaders.h"
+#include "../resources/Textures.h"
+#include "../ui/ZeroPoint.h"
 #include <UICommon.h>
 
 using namespace tui;
 
-void Block(RayColor& color) {
-    const float HUE_SLIDER_WIDTH = 15.0f;
+struct ColorPickerState {
+    float hue;
+    float saturation;
+    float value;
+};
+
+void ColorCircle(RayColor color, Vec2 offset, tloc loc = tloc::current()) {
+    ScopeId id(gen_id(loc));
+
+    Div border (CStyle{"color-picker-color-circle-border", {
+        .left = offset.x,
+        .top = offset.y,
+    }});
+    Div outer ("color-picker-color-circle-outer");
+    Div inner (CStyle{
+        "color-picker-color-circle-inner",
+        { .backgroundColor = color }
+    });
+}
+
+void Block(ColorPickerState& my, RayColor color) {
+    const float HUE_SLIDER_WIDTH = 20.0f;
+
+    size_routine& blockSizer = UseSizeRoutine([=](float parent) {
+        return std::sqrt((std::pow((parent / 2.0f) - HUE_SLIDER_WIDTH, 2.0f)) / 2.0f) * 2.0f;
+    });
+
+    const auto GetHuePositioner = [&](float(*mathematicalFn)(float), tloc loc = tloc::current()) {
+        return UseSizeRoutine([=](float parent) {
+            float dotRad = (parent / 2.0f) - (HUE_SLIDER_WIDTH / 2.0f);
+            return mathematicalFn(my.hue * DEG2RAD) * dotRad + (parent / 2.0f);
+        }, "", loc);
+    };
+
+    static shader_color_picker_t pickerShader;
+    static shader_hue_ring_t hueShader;
+    pickerShader.set_hue(my.hue / 360.0f);
 
     Span blockRow("fill");
     Leaf(CStyle{
         "color-picker-current-display-block",
         { .backgroundColor = color }
     });
-    Interactive blockCircle ("color-picker-circle center");
-    Interactive blockInteractor (Style {
-            .dimen = 50_pct, // TODO: need actual!
+    Interactive hueRing (CStyle{ "color-picker-circle", {
             .renderFn = [=](const RenderParams& params) {
-                params.elem.GetBorderedBounds().DrawGradient(
-                        RayColor::White(),
-                        RayColor::Black(),
-                        RayColor::Black(),
-                        RayColor::FromHSV(
-                                color.ToHSV().x,
-                                1.0f,
-                                1.0f
-                        )
-                );
+                hueShader.set_ring_width(HUE_SLIDER_WIDTH);
+                hueShader.set_size(params.elem.width);
+
+                BeginShaderMode(hueShader);
+                RayTexture& texture = Textures::Get("copy"); // TODO: remove, terrrible, bleh!
+                texture.Draw(RectF { 0.0f, 0.0f, (float) texture.width, (float) texture.height }, params.elem.GetUnBorderedBounds());
+                EndShaderMode();
+            }
+    }});
+    {
+        ZeroPoint zpHue (Style{
+            .position = PositionType::Relative,
+            .left = GetHuePositioner(std::cos),
+            .top = GetHuePositioner(std::sin),
+        });
+        ColorCircle(ColorFromHSV(my.hue, 1.0f, 1.0f), { -7, -7 });
+    }
+
+    Div blockCenterer ("fill center");
+    Interactive colorPickerBlock (Style {
+            .dimen = blockSizer,
+            .renderFn = [=](const RenderParams& params) {
+                BeginShaderMode(pickerShader);
+                RayTexture& texture = Textures::Get("copy"); // TODO: remove, terrrible, bleh!
+                texture.Draw(RectF { 0.0f, 0.0f, (float) texture.width, (float) texture.height }, params.elem.GetUnBorderedBounds());
+                EndShaderMode();
             }
     });
+    ZeroPoint zpBlock (CStyle{"center", { .left = portion{ my.saturation }, .top = portion{ 1.0f - my.value } } });
+    ColorCircle(color, { 0, -7 });
 
-    raylib::Shader s("", "");
-    
-    if (blockInteractor.Down()) {
-        auto [saturation, valueInv] = blockInteractor.DownAtBoundedNorm();
-        color = ColorFromHSV(color.ToHSV().x, saturation, 1.0f - valueInv);
+    bool& hueRingDown = UseRef(false);
 
-        // TODO: hue
+    if (colorPickerBlock.Down()) {
+        auto [newSaturation, valueInv] = colorPickerBlock.DownAtBoundedNorm();
+        my.saturation = newSaturation;
+        my.value = 1.0f - valueInv;
+
+        // TODO: hue,s,v state!
+    } else if (hueRing.Pressed() && hueRing.UsePrev()) {
+        float hueRad = hueRing.UsePrev()->width / 2.0f;
+        float hueDist = hueRing.DownAtCenterDist();
+
+        hueRingDown = hueDist >= (hueRad - HUE_SLIDER_WIDTH) && hueDist <= hueRad;
+    }
+
+    if (!hueRing.Down()) {
+        hueRingDown = false;
+    }
+
+    if (hueRingDown) {
+        float hueAngle = hueRing.DownAtCenterAngle();
+
+        my.hue = -hueAngle * RAD2DEG;
     }
 }
 
@@ -61,9 +131,28 @@ void ReadOut(RayColor& color) {
     if (copy.Pressed()) { SetClipboardText(readout.c_str()); }
 }
 
+void BestMatchStateToReality(ColorPickerState& my, RayColor color) {
+    if (RayColor(ColorFromHSV(my.hue, my.saturation, my.value)) == color) { return; }
+
+    auto [newHue, newSaturation, newValue] = ColorToHSV(color);
+    my.hue = newHue;
+    my.saturation = newSaturation;
+    my.value = newValue;
+}
+
+void ApplyStateChanges(ColorPickerState& my, RayColor& color) {
+    color = ColorFromHSV(my.hue, my.saturation, my.value);
+}
+
 void art_net::ColorPicker(RayColor& color, const tuid_t& idLike, tloc location) {
     ScopeId pickerId (gen_id(idLike, location));
+    auto& my = UseRef<ColorPickerState>({});
+
     Div container ("color-picker-container");
-    Block(color);
+
+    BestMatchStateToReality(my, color);
+    Block(my, color);
+    ApplyStateChanges(my, color);
+
     ReadOut(color);
 }

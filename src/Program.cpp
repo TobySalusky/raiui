@@ -109,7 +109,7 @@ void Program::LeftPanelUI() {
     Panel panel({ .defaultWidth = 150.0f, .minWidth = 50.0f}, "primary-panel");
     {
         Div top("fill");
-        static RayColor color = RED;
+        static RayColor color = BLUE;
         art_net::ColorPicker(color);
     }
     {

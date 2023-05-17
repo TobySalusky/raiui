@@ -85,6 +85,35 @@ namespace tui {
                 : mp;
         }
 
+        [[nodiscard]] float DownAtCenterDist() {
+            if (!Down()) {
+                Log("[WARNING]: `DownAtOffset` called while Interactive not pressed! -- likely unintentional!");
+                return 0.0f;
+            }
+
+            auto prev = UsePrev();
+            Vec2 mp = raylib::Mouse::GetPosition();
+            RectF rect = prev->GetBorderedBounds();
+            Vec2 center = rect.GetPosition() + rect.GetSize() / 2.0f;
+
+            return mp.Distance(center);
+        }
+
+        [[nodiscard]] float DownAtCenterAngle() {
+            if (!Down()) {
+                Log("[WARNING]: `DownAtOffset` called while Interactive not pressed! -- likely unintentional!");
+                return 0.0f;
+            }
+
+            auto prev = UsePrev();
+            Vec2 mp = raylib::Mouse::GetPosition();
+            RectF rect = prev->GetBorderedBounds();
+            Vec2 center = rect.GetPosition() + rect.GetSize() / 2.0f;
+
+            return (mp - center).Angle({0, 0});
+        }
+
+
         [[nodiscard]] Vec2 DownAtOffsetBound() {
             auto prev = UsePrev();
             Vec2 offset = DownAtOffset();

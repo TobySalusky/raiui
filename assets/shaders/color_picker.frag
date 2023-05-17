@@ -1,3 +1,17 @@
+#version 330
+
+// Input vertex attributes (from vertex shader)
+in vec2 fragTexCoord;
+in vec4 fragColor;
+
+// Input uniform values
+uniform sampler2D texture0;
+uniform vec4 colDiffuse;
+
+// Output fragment color
+out vec4 finalColor;
+
+// CUSTOM
 uniform float hue;
 
 vec3 hsv2rgb(vec3 c)
@@ -7,9 +21,7 @@ vec3 hsv2rgb(vec3 c)
     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }
 
-void mainImage(out vec4 fragColor, in vec2 fragCoord)
+void main()
 {
-    float wPercent = fragCoord.x / iResolution.x;
-    float hPercent = fragCoord.y / iResolution.y;
-    fragColor = vec4(hsv2rgb(vec3(hue, wPercent, hPercent)), 1.0);
+    finalColor = vec4(hsv2rgb(vec3(hue, fragTexCoord.x, 1.0 - fragTexCoord.y)), 1.0);
 }

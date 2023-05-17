@@ -8,6 +8,7 @@
 #include "Units.h"
 #include "../resources/Fonts.h"
 #include "Main.h"
+#include "SizeRoutine.h"
 
 #define TUI_STYLE_STEAL(arg) if (other.arg) { arg = other.arg; }
 //TODO:?
@@ -37,7 +38,7 @@ struct z_add {
 #define z_down z_add{-1}
 
 using ZIndexVariant = variant<int, z_add>;
-using SizeVariant = variant<float, int, tui::percent, tui::fraction, tui::view_width_pct, tui::view_height_pct>;
+using SizeVariant = variant<float, int, tui::percent, tui::fraction, tui::view_width_pct, tui::view_height_pct, tui::size_routine>;
 using ColorVariant = variant<RayColor, string>;
 using TextureVariant = variant<RayTexture*, string>;
 
@@ -114,8 +115,8 @@ public:
     optional<OverflowMode> overflow = std::nullopt;
     optional<PositionType> position = std::nullopt;
 
-    optional<float> left = std::nullopt;
-    optional<float> top = std::nullopt;
+    optional<SizeVariant> left = std::nullopt; // TODO: toby, use SizeVariant!
+    optional<SizeVariant> top = std::nullopt;
 
     optional<ZIndexVariant> zIndex = std::nullopt;
 
@@ -447,8 +448,8 @@ struct style_t {
     optional<OverflowMode> overflow = std::nullopt;
     optional<PositionType> position = std::nullopt;
 
-    optional<float> left = std::nullopt;
-    optional<float> top = std::nullopt;
+    optional<SizeVariant> left = std::nullopt;
+    optional<SizeVariant> top = std::nullopt;
 
     optional<ZIndexVariant> zIndex = std::nullopt;
 

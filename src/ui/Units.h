@@ -9,6 +9,14 @@ namespace tui {
         float value;
     };
 
+    struct portion {
+        float value;
+
+        operator percent() {
+            return percent { value * 100.0f };
+        }
+    };
+
     constexpr percent operator"" _pct(long double value) {
         return percent { static_cast<float>(value) };
     }

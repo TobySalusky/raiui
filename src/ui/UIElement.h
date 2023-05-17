@@ -80,7 +80,7 @@ namespace tui {
 
         void JustifyChildren();
         void AlignChildren();
-        void ShiftRelativeChildren();
+        void ApplyChildPositioning();
 
         void SizeSelfByContent();
         void ApplyAspectRatio();
@@ -88,7 +88,7 @@ namespace tui {
 
         void RelativelySizeChildren();
         void RelativelySizeFractionalChildren();
-        void RelativelySizePercentageChildren();
+        void RelativelySizePercentageOrRoutineChildren();
 
         [[nodiscard]] bool WidthDir() const { return flexDir == FlexDirection::Row ? PRIMARY : SECONDARY; }
         [[nodiscard]] bool HeightDir() const { return !WidthDir(); }
@@ -153,5 +153,6 @@ namespace tui {
         DEFINE_DIRECTIONAL_SIZE_STYLE_GET(MarginLastStyle, style.marginRight, style.marginBottom);
         DEFINE_DIRECTIONAL_SIZE_STYLE_GET(BorderWidthFirstStyle, style.borderLeftWidth, style.borderTopWidth);
         DEFINE_DIRECTIONAL_SIZE_STYLE_GET(BorderWidthLastStyle, style.borderRightWidth, style.borderBottomWidth);
+        DEFINE_DIRECTIONAL_SIZE_STYLE_GET(PositionalFirstStyle, style.left, style.top);
     };
 }

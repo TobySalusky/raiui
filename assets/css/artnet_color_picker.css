@@ -17,8 +17,6 @@
     dimen: 1fr;
     aspect-ratio: 1 / 1;
     margin-bottom: 5px;
-    border-radius: 50px;
-    background-color: #00FF00;
 }
 
 .color-picker-readout-input {
@@ -31,4 +29,25 @@
 .color-picker-readout-copy-btn-hover {
     border-radius: 3px;
     background-color: lightslategray;
+}
+
+.color-picker-color-circle-border {
+    position: relative;
+
+    dimen: 14px;
+    border-radius: 7px;
+    background-color: black;
+    align: center;
+}
+.color-picker-color-circle-outer {
+    dimen: 12px;
+    border-radius: 6px;
+    background-color: ghostwhite;
+    align: center;
+}
+.color-picker-color-circle-inner {
+    dimen: 6px;
+    border-radius: 3px;
+    background-color: red;
+    align: center;
 }
