@@ -24,5 +24,6 @@ private:
     void ContentStripUI();
 
     void LeftPanelUI();
+    void CenterPane();
     void RightPanelUI();
 };

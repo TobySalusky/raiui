@@ -8,6 +8,7 @@ template <typename T>
 class optional_ref {
 public:
     optional_ref(T* ptr) : opt(ptr == nullptr ? std::nullopt : std::optional<T*>{ ptr }) {}
+    optional_ref(T& val) : opt(std::optional<T*>{ &val }) {}
     optional_ref(std::nullopt_t no) : opt(std::nullopt) {}
 
     constexpr T& value() {

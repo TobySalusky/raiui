@@ -1,6 +1,6 @@
 .color-picker-container {
     dimen: 1fr;
-    background-color: darkgrey;
+    background-color: #494949;
     align-items: center;
     padding: 5px;
 }
@@ -24,6 +24,9 @@
     width: 1fr;
     margin-right: 5px;
     overflow: hidden;
+    border-color: lightgrey;
+    color: lightgrey;
+    background-color: #656c6c;
 }
 
 .color-picker-readout-copy-btn-hover {
@@ -50,4 +53,12 @@
     border-radius: 3px;
     background-color: red;
     align: center;
+}
+
+.copy-alert-popup {
+    background-color: #9a7ea2;
+    color: ghostwhite;
+    border-radius: 5px;
+    font-size: 20px;
+    padding: 4px;
 }

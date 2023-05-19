@@ -5,6 +5,7 @@
 #pragma once
 
 #include "Includes.h"
+#include "Layer.h"
 
 class Canvas {
 public:
@@ -16,4 +17,6 @@ private:
     int width = 1920;
     int height = 1080;
     RayColor backgroundColor = WHITE;
+
+    vector<Layer> layers = {};
 };

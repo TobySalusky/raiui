@@ -7,6 +7,7 @@
 #include "compile/shaders.h"
 #include "../resources/Textures.h"
 #include "../ui/ZeroPoint.h"
+#include "../ui/Alert.h"
 #include <UICommon.h>
 
 using namespace tui;
@@ -128,7 +129,12 @@ void ReadOut(RayColor& color) {
     });
     ImageLeaf ("copy", "dim:16px");
 
-    if (copy.Pressed()) { SetClipboardText(readout.c_str()); }
+    TextAlert copiedAlert(copy, "copied!", "copy-alert-popup");
+
+    if (copy.Pressed()) {
+        SetClipboardText(readout.c_str());
+        copiedAlert.Trigger();
+    }
 }
 
 void BestMatchStateToReality(ColorPickerState& my, RayColor color) {
@@ -143,11 +149,12 @@ void BestMatchStateToReality(ColorPickerState& my, RayColor color) {
 void ApplyStateChanges(ColorPickerState& my, RayColor& color) {
     color = ColorFromHSV(my.hue, my.saturation, my.value);
 }
-
-void art_net::ColorPicker(RayColor& color, const tuid_t& idLike, tloc location) {
-    ScopeId pickerId (gen_id(idLike, location));
+//#define ID_STUB_DEFN const tuid_t& idLike = "", tloc loc = tloc::current() TODO: ?? do i like these macros ?? :/
+//#define ID_STUB_IMPL const tuid_t& idLike, tloc loc
+//#define SCOPE_ID ScopeId _tui_scope_id__ (gen_id(idLike, loc))
+void art_net::ColorPicker(RayColor& color, const tuid_t& idLike, tloc loc) {
+    ScopeId pickerId (gen_id(idLike, loc));
     auto& my = UseRef<ColorPickerState>({});
-
     Div container ("color-picker-container");
 
     BestMatchStateToReality(my, color);

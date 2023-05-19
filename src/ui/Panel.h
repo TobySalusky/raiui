@@ -45,7 +45,7 @@ namespace tui {
             if (dir == PanelDirection::Right) { PanelContentPane(); }
 
             {
-                Div dragBarContainer (Style { .width = 1, .height = 100_pct, .alignItems = AlignType::Center, .backgroundColor = BLACK });
+                Div dragBarContainer (Style { .width = 1, .height = 100_pct, .alignItems = AlignType::Center, .backgroundColor = BLACK, .zIndex = z_up });
                 Button dragBar (content{}, Style { .width = 15, .height = 100_pct });
                 auto prev = DOM::Previous().Lookup(container.id);
                 if (dragBar.Down() && prev) {

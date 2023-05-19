@@ -13,7 +13,6 @@ namespace tui {
         style_t active = {};
     };
 
-
     struct InteractiveClass {
         string className;
         [[nodiscard]] InteractiveStyles CreateInteractiveStyles() const {

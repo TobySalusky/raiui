@@ -45,8 +45,8 @@ void Program::Run() {
 
     // tui
     tui::Initialize({
-        .cssDirectoryPath = Paths::Asset("css"),
-        .textureLoadCallback = [](const string& textureName) { return &Textures::Get(textureName); }
+            .cssDirectoryPath = Paths::Asset("css"),
+            .textureLoadCallback = [](const string& textureName) { return &Textures::Get(textureName); }
     });
 
     // HideCursor(); TODO: use custom cursor!
@@ -56,6 +56,7 @@ void Program::Run() {
         Render();
     }
 }
+
 void Program::Update(float deltaTime) {
     KeyInput::Collect();
 }
@@ -79,8 +80,8 @@ void Program::Render() {
 }
 
 void Program::UI() {
-    Div page (Style { .dimens = {{ SCREEN_WIDTH, SCREEN_HEIGHT }} });
-    FlexVert screenContainer ("fill");
+    Div page(Style{ .dimens = {{ SCREEN_WIDTH, SCREEN_HEIGHT }}});
+    FlexVert screenContainer("fill");
     ContentStripUI();
     BottomBarUI();
 
@@ -94,19 +95,21 @@ void Program::UI() {
 void Program::ContentStripUI() {
     FlexHoriz panelContainer("fill");
     LeftPanelUI();
+    Leaf("fill bg:green");
     RightPanelUI();
 }
 
 void Program::BottomBarUI() {
-    Span bottomBar ("bottom-bar");
+    Span bottomBar("bottom-bar");
 
     Vec2 mousePos = raylib::Mouse::GetPosition();
-    Text("mouse: "s + std::to_string((int) mousePos.x) + ", " + std::to_string((int) mousePos.y), Style{ .fontSize = 20, .padding = 5, .color = GRAY });
-    Text("FPS: "s + std::to_string(GetFPS()), Style{ .fontSize = 20, .padding = 5, .color = GRAY });
+    Text("mouse: "s + std::to_string((int) mousePos.x) + ", " + std::to_string((int) mousePos.y),
+         Style{ .fontSize = 20, .padding = 5, .color = GRAY});
+    Text("FPS: "s + std::to_string(GetFPS()), Style{ .fontSize = 20, .padding = 5, .color = GRAY});
 }
 
 void Program::LeftPanelUI() {
-    Panel panel({ .defaultWidth = 150.0f, .minWidth = 50.0f}, "primary-panel");
+    Panel panel({ .defaultWidth = 150.0f, .minWidth = 50.0f }, "primary-panel");
     {
         Div top("fill");
         static RayColor color = BLUE;
@@ -135,20 +138,20 @@ void Program::LayerUI() {
     };
 
     static vector<Layer> layers = {
-            {"Line Art", "kitasad" },
-            {"Colour", "kitahappy" },
-            {"Colour2", "kitahappy" },
+            { "Line Art", "kitasad" },
+            { "Colour",   "kitahappy" },
+            { "Colour2",  "kitahappy" },
     };
 
     {
-        ScrollViewY scrollableViewContainer ("layer-container");
+        ScrollViewY scrollableViewContainer("layer-container");
 
-        for (Layer& layer : layers) {
-            ScopeId layerId (layer.name);
+        for (Layer& layer: layers) {
+            ScopeId layerId(layer.name);
             Span layerBox("layer-box");
             {
                 { // toggle
-                    Interactive toggle(InteractiveClass { "layer-toggle-box" });
+                    Interactive toggle(InteractiveClass{ "layer-toggle-box" });
                     Div eye(layer.visible ? "layer-eye-open" : "layer-eye-close");
 
                     if (auto tp = DelayTooltip(toggle)) {
@@ -158,7 +161,7 @@ void Program::LayerUI() {
                     if (toggle.Pressed()) { layer.visible ^= true; }
                 }
                 { // stub
-                    Interactive layerBoxStub(InteractiveClass {"layer-box-stub"});
+                    Interactive layerBoxStub(InteractiveClass{ "layer-box-stub" });
                     ImageLeaf(layer.textureName, "layer-image");
                     Text(layer.name, "layer-text");
                 }
@@ -167,10 +170,10 @@ void Program::LayerUI() {
     }
     {
         Span s("layer-buttons-container");
-        const auto LayerButton = [](const string& text, const string& tooltip, auto onPress){
+        const auto LayerButton = [](const string& text, const string& tooltip, auto onPress) {
             ScopeId scopeId(text);
 
-            Interactive button(InteractiveClass{"layer-button"});
+            Interactive button(InteractiveClass{ "layer-button" });
             Text(text);
             if (button.Pressed()) {
                 onPress();
@@ -180,17 +183,18 @@ void Program::LayerUI() {
             }
         };
 
-        LayerButton("+", "Add layer", [&](){
-            layers.push_back({"Colour"s + std::to_string(layers.size()), "kitasad" });
+        LayerButton("+", "Add layer", [&] {
+            layers.push_back({ "Colour"s + std::to_string(layers.size()), "kitasad" });
         });
 
-        LayerButton("-", "Delete layer", [&](){
+        LayerButton("-", "Delete layer", [&] {
             if (!layers.empty()) { layers.pop_back(); }
         });
-
-        static string it = "hi";
-        TextInput input(it);
     }
+}
+
+void Program::CenterPane() {
+
 }
 
 #pragma clang diagnostic pop
